@@ -1,10 +1,10 @@
-# tp
+# MAL
 
-A Clojure library designed to ... well, that part is up to you.
+A Clojure library designed to *make a lisp*
 
 ## Usage
 
-FIXME
+Not sure yet
 
 ## License
 
