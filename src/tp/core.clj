@@ -318,6 +318,39 @@
 
 
 
+
+
+
+;;;;;;;;;;;;;;;;;;;; testear ;;;;;;;;;;;;;;;;;;;;
+
+; Evalua (con evaluar) secuencialmente las sublistas de una lista y retorna el valor de la ultima evaluacion.
+(defn evaluar-secuencia-en-cond [lis amb-global amb-local]
+  (last (map (evaluar lis amb-global amb-local)))
+  )
+
+
+
+; Evalua el cuerpo de una macro COND. Siempre retorna una lista con un resultado y un ambiente.
+; Recibe una lista de sublistas (cada una de las cuales tiene una condicion en su 1ra. posicion) y los ambientes global y local
+; Si la lista es nil, el resultado es nil y el ambiente retornado es el global.
+; Si no, evalua (con evaluar) la cabeza de la 1ra. sublista y, si el resultado no es nil, retorna el res. de invocar a evaluar-secuencia-en-condicion con la cola de esa sublista.
+; En caso contrario, sigue con las demas sublistas.
+(defn evaluar-cond [lis amb-global amb-local]
+  (if (nil? lis)
+    (list nil amb-global)
+    (let [cabeza_primer_sublista (ffirst lis), cola_primer_sublista (first (rest lis))]
+      (if-not (nil? (evaluar cabeza_primer_sublista amb-global amb-local))
+        (evaluar-secuencia-en-cond cola_primer_sublista amb-global amb-local)
+        (evaluar-cond (rest lis) amb-global amb-local))
+      )
+    )
+  )
+
+
+
+
+
+
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
 
 ; Falta implementar las 9 funciones auxiliares (actualizar-amb, controlar-aridad, imprimir, buscar, etc.)
