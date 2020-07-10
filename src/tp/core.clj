@@ -212,6 +212,29 @@
   )
 
 
+
+
+
+; Rotarna true si recibe dos strings iguales
+; NOT CASE SENSITIVE
+(defn igual_string? [a b]
+  (if (and (string? a) (string? b))
+    (= (clojure.string/lower-case a) (clojure.string/lower-case b))
+    (do false)
+    )
+  )
+
+; Retorna True si recibe una lista vacia y un nil
+(defn igual_lista_nil? [a b]
+  (or (and (empty? a) (nil? b)) (and (empty? b) (nil? a))))
+
+; Compara la igualdad de dos simbolos.
+; Recibe dos simbolos a y b. Retorna true si se deben considerar iguales; si no, false.
+; Se utiliza porque TLC-LISP no es case-sensitive y ademas no distingue entre nil y la lista vacia.
+ (defn igual? [a b]
+   (or (= a b)  (igual_string? a b) (igual_lista_nil? a b))
+   )
+
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
 
 ; Falta implementar las 9 funciones auxiliares (actualizar-amb, controlar-aridad, imprimir, buscar, etc.)
