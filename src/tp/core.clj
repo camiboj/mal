@@ -293,6 +293,15 @@
 
 
 
+; Revisa una lista de argumentos evaluados.
+; Recibe la lista y, si esta contiene alguna sublista que comienza con '*error*, retorna esa sublista. Si no, retorna nil.
+(defn revisar-lae [lis]
+  (first (filter primer_elemento_error? lis))
+  )
+
+
+
+
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
 
 ; Falta implementar las 9 funciones auxiliares (actualizar-amb, controlar-aridad, imprimir, buscar, etc.)
