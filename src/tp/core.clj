@@ -232,8 +232,72 @@
 ; Recibe dos simbolos a y b. Retorna true si se deben considerar iguales; si no, false.
 ; Se utiliza porque TLC-LISP no es case-sensitive y ademas no distingue entre nil y la lista vacia.
  (defn igual? [a b]
-   (or (= a b)  (igual_string? a b) (igual_lista_nil? a b))
+   (or (= a b) (igual_string? a b) (igual_lista_nil? a b))
    )
+
+
+
+
+
+; define los separadores a imprimir luego de cada elemento de un vecto
+; ("a" "b" "c") -> (" ", " ", ")")
+(defn def_separadores_vector [elem]
+  (concat (take (dec (count elem)) (repeat " ")) ")")
+  )
+
+
+; imprime el elemento y luego el separador
+; si el elemento es un string "<elem>"
+; si el elemento es un lista (<elemento1> <elemento2> )
+;   si cada subelemento es string => agrega
+; si no imprime el elemento a secas <elemento>
+(defn _imprimir [separador elem]
+  (if (not (= elem 'exit ))
+    (if (string? elem)
+      (do (printf  "\"%s\"" elem))
+      (if (list? elem)
+        (do (print "(") (dorun (map _imprimir (def_separadores_vector elem) elem)))
+        (do (print elem))
+        )
+      )
+    )
+  (print separador)
+  )
+
+; Imprime, con salto de linea, atomos o listas en formato estandar (las cadenas con comillas) y devuelve su valor. Muestra errores sin parentesis.
+; Aridad 1: Si recibe un escalar, lo imprime con salto de linea en formato estandar (pero si es space no lo imprime). purga la salida y devuelve el escalar.
+; Si recibe una secuencia cuyo primer elemento es "error", se llama recursivamente con dos argumentos iguales: la secuencia recibida.
+; Si no, imprime lo recibido con salto de linea en formato estandar, purga la salida y devuelve la cadena.
+; Aridad 2: Si el primer parametro es nil, imprime un salto de linea, purga la salida y devuelve el segundo parametro.
+; Si no, imprime su primer elemento en formato estandar, imprime un espacio y se llama recursivamente con la cola del primer parametro y el segundo intacto.
+(defn imprimir
+  ([elem]
+   (_imprimir "\n" elem)
+   (do elem)
+   )
+  ([lis orig] (println  list )))
+
+(def elem 'a)
+; a
+; a
+(println (imprimir elem))
+
+(def elem "hola")
+; "hola"
+; hola
+(println (imprimir elem))
+
+(def elem (list "a" "b"))
+; ("a" "b")
+; (a b)
+(println (imprimir elem))
+
+(def elem (list 'a 'b))
+; (a b)
+; (a b)
+(println (imprimir elem))
+
+
 
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
 
