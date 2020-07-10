@@ -138,21 +138,15 @@
 
 
 
-
-; Retorna True si valor no es una lista.
-; Sino retorna False
-(defn escalar? [valor]
-  (not (list? valor))
-  )
-
 ; Retorna True si el valor no es escalar y
-; en su primera posicion contiene '*error*
-(defn primer_elemento_error? [valor]
-  (if (escalar? valor)
-    (do false)
-    (= (first valor) '*error*)
+; en su primera posicion contiene elemento
+(defn primer_elemento? [secuencia elemento]
+  (and (sequential? secuencia) (= (first secuencia) elemento)
     )
   )
+
+(defn primer_elemento_error? [secuencia]
+  (primer_elemento? secuencia '*error*))
 
 ; Retorna valor si indice es par
 ; retorna nil en caso contrario
@@ -186,7 +180,7 @@
 ; Si el valor no es escalar y en su primera posicion contiene '*error*,: retorna el ambiente intacto
 ; Si no, coloca la clave y el valor en el ambiente (puede ser un alta o una actualizacion) y lo retorna.
 (defn actualizar-amb [amb-global clave valor]
-  (if (primer_elemento_error? valor)
+  (if (primer_elemento_error? amb-global)
     (do amb-global)
     (do (agregar_varieble amb-global clave valor))
     )
@@ -272,30 +266,13 @@
 ; Si no, imprime su primer elemento en formato estandar, imprime un espacio y se llama recursivamente con la cola del primer parametro y el segundo intacto.
 (defn imprimir
   ([elem]
-   (_imprimir "\n" elem)
-   (do elem)
+   (if  (primer_elemento? elem "error")
+     (imprimir elem elem)
+     (do (_imprimir "\n" elem)
+       elem)
+     )
    )
-  ([lis orig] (println  list )))
-
-(def elem 'a)
-; a
-; a
-(println (imprimir elem))
-
-(def elem "hola")
-; "hola"
-; hola
-(println (imprimir elem))
-
-(def elem (list "a" "b"))
-; ("a" "b")
-; (a b)
-(println (imprimir elem))
-
-(def elem (list 'a 'b))
-; (a b)
-; (a b)
-(println (imprimir elem))
+  ([lis orig] (println  "doble aridad" )))
 
 
 
