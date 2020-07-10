@@ -280,6 +280,26 @@
   )
 
 
+
+
+
+; Revisa una lista que representa una funcion.
+; Recibe la lista y, si esta comienza con '*error*, la retorna. Si no, retorna nil.
+(defn revisar-f [lis]
+  (if (primer_elemento_error? lis)
+    (do lis)
+    (do nil)
+    )
+  )
+
+
+; '*error* "a"
+(println (revisar-f (list '*error* "a")))
+
+; nil
+(println (revisar-f (list 'otro "a")))
+
+
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
 
 ; Falta implementar las 9 funciones auxiliares (actualizar-amb, controlar-aridad, imprimir, buscar, etc.)
