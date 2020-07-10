@@ -175,7 +175,7 @@
 (defn agregar_varieble [ambiente clave valor]
   (let [indice (index_clave ambiente clave)]
     (if (< indice 0)
-      (do (println indice) (conj (conj ambiente clave) valor))
+      (do (conj (conj ambiente clave) valor))
       (do (assoc ambiente (inc indice) valor))
       )
     )
