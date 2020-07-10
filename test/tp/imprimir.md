@@ -40,3 +40,6 @@
 ; (a b)
 (println (imprimir elem))
 ```
+
+# imprrimir (Aridad 0)
+**NI IDEA, NO LO ENTENDI**

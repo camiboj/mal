@@ -268,12 +268,16 @@
   ([elem]
    (if  (primer_elemento? elem "error")
      (imprimir elem elem)
-     (do (_imprimir "\n" elem)
-       elem)
+     (do (_imprimir "\n" elem) elem)
      )
    )
-  ([lis orig] (println  "doble aridad" )))
-
+  ([lis orig]
+   (if (nil? lis)
+    (do (print "\n") orig)
+    (do (_imprimir " " (first lis)) (imprimir (rest lis) orig))
+    )
+   )
+  )
 
 
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
