@@ -181,7 +181,6 @@
     )
   )
 
-
 ; Actualiza un ambiente (una lista con claves en las posiciones pares [0, 2, 4..]
 ; y valores en las pares [1, 2, 3..] Recibe el ambiente, la clave y el valor.
 ; Si el valor no es escalar y en su primera posicion contiene '*error*,: retorna el ambiente intacto
@@ -193,6 +192,24 @@
     )
   )
 
+
+
+
+
+; Controla la aridad (cantidad de argumentos de una funcion).
+; Recibe una lista y un numero. Si la longitud de la lista coincide con el numero, retorna el numero.
+; Si es menor, retorna (list '*error* 'too-few-args).
+; Si es mayor, retorna (list '*error* 'too-many-args).
+(defn controlar-aridad [lis val-esperado]
+  (let [len (count lis)]
+   (if (= len val-esperado)
+    (do val-esperado)
+    (if (< len val-esperado)
+      (do (list '*error* 'too-few-args))
+      (if (> len val-esperado)
+         (do (list '*error* 'too-many-args))))
+     ))
+  )
 
 
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
