@@ -196,13 +196,12 @@
 ; Si es mayor, retorna (list '*error* 'too-many-args).
 (defn controlar-aridad [lis val-esperado]
   (let [len (count lis)]
-   (if (= len val-esperado)
-    (do val-esperado)
-    (if (< len val-esperado)
-      (do (list '*error* 'too-few-args))
-      (if (> len val-esperado)
-         (do (list '*error* 'too-many-args))))
-     ))
+    (cond
+      (= len val-esperado) val-esperado
+      (< len val-esperado) (list '*error* 'too-few-args)
+      (> len val-esperado) (list '*error* 'too-many-args)
+      )
+    )
   )
 
 
@@ -292,12 +291,6 @@
     )
   )
 
-
-; '*error* "a"
-(println (revisar-f (list '*error* "a")))
-
-; nil
-(println (revisar-f (list 'otro "a")))
 
 
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
