@@ -302,6 +302,22 @@
 
 
 
+
+; Busca una clave en un ambiente (una lista con claves en las posiciones pares [0, 2, 4...]
+; y valores en las pares [1, 3, 5...] y retorna el val
+; Si no la encuentra, retorna una lista con '*error* en la 1ra. pos., 'unbound
+(defn buscar [clave ambiente]
+  (list '*error* 'unbound)
+  (let [indice (index_clave ambiente clave)]
+    (if (< indice 0)
+      (list '*error* 'unbound)
+      (do (nth ambiente (inc indice)))
+      )
+    )
+  )
+
+
+
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
 
 ; Falta implementar las 9 funciones auxiliares (actualizar-amb, controlar-aridad, imprimir, buscar, etc.)
