@@ -47,7 +47,7 @@
      (if (and (seq? nomb) (igual? (first nomb) '*error*))
        (do (imprimir nomb) amb-global)
        (let [nm (clojure.string/lower-case (str nomb)),
-             nom (if (and (> (count nm) 4)(clojure.string/ends-with? nm ".lsp")) nm (str nm ".lsp")),
+             nom (if (and (> (count nm) 4) (clojure.string/ends-with? nm ".lsp")) nm (str nm ".lsp")),
              ret (try (with-open [in (java.io.PushbackReader. (clojure.java.io/reader nom))]
                         (binding [*read-eval* false] (try (let [res (evaluar (read in) amb-global nil)]
                                                             (cargar-arch (fnext res) nil in res))
@@ -136,10 +136,67 @@
                               (aplicar (cons 'lambda (cons (fnext f) (next (nnext f)))) lae (fnext (evaluar (first (nnext f)) amb-global (concat (reduce concat (map list (fnext f) lae)) amb-local))) amb-local))))))
   )
 
+
+
+
+; Retorna True si valor no es una lista.
+; Sino retorna False
+(defn escalar? [valor]
+  (not (list? valor))
+  )
+
+; Retorna True si el valor no es escalar y
+; en su primera posicion contiene '*error*
+(defn primer_elemento_error? [valor]
+  (if (escalar? valor)
+    (do false)
+    (= (first valor) '*error*)
+    )
+  )
+
+; Retorna valor si indice es par
+; retorna nil en caso contrario
+(defn pos_par [indice valor]
+  (if (even? indice) (do valor))
+  )
+
+; Retorna las claves del ambiente
+; aquellas que se encuentre en posiciones pares (0, 2, 4...)
+(defn obtener_claves [ambiente]
+  (keep-indexed pos_par ambiente)
+  )
+
+; Devuelve el indice de la clave
+; Si la clave no existe retorna un numero negativo
+(defn index_clave [ambiente clave]
+  (* (.indexOf (obtener_claves ambiente) clave) 2)
+  )
+
+(defn agregar_varieble [ambiente clave valor]
+  (let [indice (index_clave ambiente clave)]
+    (if (< indice 0)
+      (do (println indice) (conj (conj ambiente clave) valor))
+      (do (assoc ambiente (inc indice) valor))
+      )
+    )
+  )
+
+
+; Actualiza un ambiente (una lista con claves en las posiciones pares [0, 2, 4..]
+; y valores en las pares [1, 2, 3..] Recibe el ambiente, la clave y el valor.
+; Si el valor no es escalar y en su primera posicion contiene '*error*,: retorna el ambiente intacto
+; Si no, coloca la clave y el valor en el ambiente (puede ser un alta o una actualizacion) y lo retorna.
+(defn actualizar-amb [amb-global clave valor]
+  (if (primer_elemento_error? valor)
+    (do amb-global)
+    (do (agregar_varieble amb-global clave valor))
+    )
+  )
+
+
+
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
 
 ; Falta implementar las 9 funciones auxiliares (actualizar-amb, controlar-aridad, imprimir, buscar, etc.)
 
 ; Falta hacer que la carga del interprete en Clojure (tlc-lisp.clj) retorne true
-
-(repl)
