@@ -322,10 +322,14 @@
 
 
 ;;;;;;;;;;;;;;;;;;;; testear ;;;;;;;;;;;;;;;;;;;;
-
 ; Evalua (con evaluar) secuencialmente las sublistas de una lista y retorna el valor de la ultima evaluacion.
 (defn evaluar-secuencia-en-cond [lis amb-global amb-local]
-  (last (map (evaluar lis amb-global amb-local)))
+  (let [ret (evaluar (first lis) amb-global amb-local)]
+    (if (< 1 (count lis))
+      (evaluar-secuencia-en-cond (next lis) amb-global amb-local)
+      ret
+      )
+    )
   )
 
 
@@ -338,14 +342,13 @@
 (defn evaluar-cond [lis amb-global amb-local]
   (if (nil? lis)
     (list nil amb-global)
-    (let [cabeza_primer_sublista (ffirst lis), cola_primer_sublista (first (rest lis))]
+    (let [cabeza_primer_sublista (ffirst lis), cola_primer_sublista (fnext lis)]
       (if-not (nil? (evaluar cabeza_primer_sublista amb-global amb-local))
         (evaluar-secuencia-en-cond cola_primer_sublista amb-global amb-local)
-        (evaluar-cond (rest lis) amb-global amb-local))
+        (evaluar-cond (next lis) amb-global amb-local))
       )
     )
   )
-
 
 
 
