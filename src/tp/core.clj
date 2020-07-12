@@ -69,6 +69,13 @@
 ; Si no lo es, se trata de una funcion en posicion de operador (es una aplicacion de calculo lambda), por lo que se llama a la funcion aplicar,
 ; pasandole 4 argumentos: la evaluacion del primer elemento, una lista con las evaluaciones de los demas, el ambiente global y el ambiente local.
 (defn evaluar [expre amb-global amb-local]
+  (print "- EVALUANDO PIPI -")
+  (print "   - expre: ")
+  (println expre)
+  (print "   - amb-global: ")
+  (println amb-global)
+  (print "   - amb-local: ")
+  (println amb-local)
   (if (not (seq? expre))
     (if (or (number? expre) (string? expre)) (list expre amb-global) (list (buscar expre (concat amb-local amb-global)) amb-global))
     (cond (igual? expre nil) (list nil amb-global)
@@ -91,8 +98,7 @@
                                                (and (not (igual? (fnext expre) nil)) (not (seq? (fnext expre)))) (list (list '*error* 'list 'expected (fnext expre)) amb-global)
                                                true (list expre amb-global))
           (igual? (first expre) 'cond) (evaluar-cond (next expre) amb-global amb-local)
-          true (aplicar (first (evaluar (first expre) amb-global amb-local)) (map (fn [x] (first (evaluar x amb-global amb-local))) (next expre)) amb-global amb-local)))
-  )
+          true (aplicar (first (evaluar (first expre) amb-global amb-local)) (map (fn [x] (first (evaluar x amb-global amb-local))) (next expre)) amb-global amb-local))))
 
 ; Aplica una funcion a una lista de argumentos evaluados, usando los ambientes global y local. Siempre retorna una lista con un resultado y un ambiente.
 ; Si la aplicacion falla, el resultado es una lista con '*error* como primer elemento, por ejemplo: (list '*error* 'arg-wrong-type) y el ambiente es el ambiente global.
@@ -108,6 +114,11 @@
   ([f lae amb-global amb-local]
    (aplicar (revisar-f f) (revisar-lae lae) f lae amb-global amb-local))
   ([resu1 resu2 f lae amb-global amb-local]
+   (println " - APLICANDO PIPI - ")
+   (print "   - f: ")
+   (println f)
+   (print "   - lae: ")
+   (println lae)
    (cond resu1 (list resu1 amb-global)
          resu2 (list resu2 amb-global)
          true  (if (not (seq? f))
@@ -169,7 +180,7 @@
 (defn agregar_varieble [ambiente clave valor]
   (let [indice (index_clave ambiente clave)]
     (if (< indice 0)
-      (do (conj (conj ambiente clave) valor))
+      (do (conj (conj ambiente valor) clave))
       (do (assoc ambiente (inc indice) valor))
       )
     )
