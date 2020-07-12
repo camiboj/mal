@@ -29,3 +29,13 @@
 (println (igual? nil (list 1)))
 (println (igual? "a" (list "a")))
 ```
+
+## comparar literales (IMPORTANTE)
+```clojure
+; true
+(println (igual? 'add 'add))
+(println (igual? 'add 'ADD))
+; false
+(println (igual? 'add '*error))
+(println (igual? '*error 'add))
+```
