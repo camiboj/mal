@@ -114,10 +114,10 @@
   ([f lae amb-global amb-local]
    (aplicar (revisar-f f) (revisar-lae lae) f lae amb-global amb-local))
   ([resu1 resu2 f lae amb-global amb-local]
-   (println " - APLICANDO PIPI - ")
-   (print "   - f: ")
+   (println "* APLICANDO PIPI * ")
+   (print "   * f: ")
    (println f)
-   (print "   - lae: ")
+   (print "   * lae: ")
    (println lae)
    (cond resu1 (list resu1 amb-global)
          resu2 (list resu2 amb-global)
@@ -161,20 +161,39 @@
 
 ; Retorna valor si indice es par
 ; retorna nil en caso contrario
-(defn pos_par [indice valor]
-  (if (even? indice) (do valor))
+(defn pos_par? [pos_valor]
+  (even? (first pos_valor))
+  )
+
+(defn obtener_valor [pos_valor]
+  (second pos_valor)
   )
 
 ; Retorna las claves del ambiente
 ; aquellas que se encuentre en posiciones pares (0, 2, 4...)
 (defn obtener_claves [ambiente]
-  (keep-indexed pos_par ambiente)
+
+  (print "  < claves: ")
+  (println (map-indexed list ambiente))
+  (print "  < claves: ")
+  (println (filter pos_par? (map-indexed list ambiente)))
+  (print "  < claves: ")
+  (println (map obtener_valor (filter pos_par? (map-indexed list ambiente))))
+
+  (map obtener_valor (filter pos_par? (map-indexed list ambiente)))
   )
 
 ; Devuelve el indice de la clave
 ; Si la clave no existe retorna un numero negativo
 (defn index_clave [ambiente clave]
-  (* (.indexOf (obtener_claves ambiente) clave) 2)
+
+  (let [indice (.indexOf (obtener_claves ambiente) clave)]
+    (print "  < indice clave en claves: ")
+    (println indice)
+    (print "  < indice clave: ")
+    (println (* indice 2))
+    (* indice 2)
+    )
   )
 
 (defn agregar_varieble [ambiente clave valor]
@@ -328,6 +347,12 @@
 ; Si no la encuentra, retorna una lista con '*error* en la 1ra. pos., 'unbound
 (defn buscar [clave ambiente]
   (list '*error* 'unbound)
+  (println "<  BUSCAR  >")
+  (print "  < clave: ")
+  (println clave)
+  (print "  < ambiente: ")
+  (println ambiente)
+
   (let [indice (index_clave ambiente clave)]
     (if (< indice 0)
       (list '*error* 'unbound)
