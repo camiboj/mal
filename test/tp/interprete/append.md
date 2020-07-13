@@ -2,28 +2,28 @@
 
 ## casos
 ```clojure
-; nil
-(append '(1) nil)
-; nil
-(append nil '(1))
-; nil
-(append nil nil)
-; (1 2)
-(append '(1) '(2))
+>>> (append '(1) nil)
+ nil
+>>> (append nil '(1))
+ nil
+>>> (append nil nil)
+ nil
+>>> (append '(1) '(2))
+ (1 2)
 
 
-; *error* list expectect
-(append 1 '(2))
+>>> (append 1 '(2))
+ (*error* list expectect)
 
 ;;; cant(parametro) != 2
-;(*error* too-many-args)
-(append '(1) '(2) '(3))
-;(*error* too-few-args)
-(append '(1))
+>>> (append '(1) '(2) '(3))
+ (*error* too-many-args)
+>>> (append '(1))
+ (*error* too-few-args)
 
 ;;; segundo no es lista
-;(list '*error* 'not-implemented)
-(append '(1) 2)
-(append '(1) "a")
-
+>>> (append '(1) 2)
+ (list '*error* 'not-implemented)
+>>> (append '(1) "a")
+ (list '*error* 'not-implemented)
 ```
