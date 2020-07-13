@@ -147,6 +147,11 @@
                                            (list '*error* 'too-few-args)
                                            (try (reduce + lae)
                                                 (catch Exception e (list '*error* 'number-expected))))
+                         (igual? f 'reverse) (let [ari (controlar-aridad lae 1), param (first lae)]
+                                             (cond (seq? ari) ari
+                                                   (igual? param nil) nil
+                                                   (not (seq? param)) (list '*error* 'list 'expected (first lae))
+                                                   true (reverse param)))
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)

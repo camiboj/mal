@@ -17,7 +17,7 @@
 (reverse (1 2 3))
 
 
-; list expectect
+; *error* list expectect
 (reverse 1)
 
 ; recibir solo un parametro
