@@ -103,15 +103,15 @@
           (igual? (first expre) 'cond) (evaluar-cond (next expre) amb-global amb-local)
           true (aplicar (first (evaluar (first expre) amb-global amb-local)) (map (fn [x] (first (evaluar x amb-global amb-local))) (next expre)) amb-global amb-local))))
 
-; cond: macro (evalúa múltiples condiciones)
-; de: macro (define función y la liga
-; exit: sale del intérprete
-; if: forma especial (evalúa una condición)
-; lambda: macro (define una func.
-; load: carga un archivo
-; or: macro (evalúa mientras no obtenga
-; quote: forma especial (impide evalua
-; setq: forma especial (liga símbolo a valor)
+; -> TODO (REPAIR) - cond: macro (evalúa múltiples condiciones)
+; -> OK -  de: macro (define función y la liga
+; -> OK -  exit: sale del intérprete
+; -> OK -  if: forma especial (evalúa una condición)
+; -> OK -  lambda: macro (define una func.
+; -> TODO -  load: carga un archivo
+; -> TODO -  or: macro (evalúa mientras no obtenga
+; -> OK -  quote: forma especial (impide evalua
+; -> OK -  setq: forma especial (liga símbolo a valor)
 
 
 
@@ -165,6 +165,28 @@
                               (aplicar (cons 'lambda (cons (fnext f) (next (nnext f)))) lae (fnext (evaluar (first (nnext f)) amb-global (concat (reduce concat (map list (fnext f) lae)) amb-local))) amb-local))))))
   )
 
+; -> OK - add: retorna la suma de los argumentos
+; -> OK - append: retorna la fusión
+; -> OK - cons: retorna inserción de
+; -> OK - env: retorna el ambiente
+; -> TODO - equal: retorna t si dos elementos
+; -> TODO - eval: retorna la evaluación de
+; -> OK - first: retorna la 1ra. posición de una lista
+; -> TODO - ge: retorna t si el 1° núm.
+; -> TODO - gt: retorna t si el 1° núm. es mayor que el 2°
+; -> TODO - length: retorna la longitud de una lista
+; -> TODO - list: retorna una lista formada por los args.
+; -> TODO - lt: retorna t si el 1° núm. es menor que el 2°
+; -> TODO - not: retorna la negación de un valor
+; -> TODO - null: retorna t si un elemento es
+; -> TODO - prin3: imprime un elemento
+; -> TODO - read: retorna la lectura de un elemento
+; -> TODO - rest: retorna una lista sin su 1ra. posición
+; -> OK - reverse: retorna una lista
+; -> TODO - sub: retorna la resta de los argumentos
+; -> TODO - terpri: imprime un salto de línea
+; -> TODO - +: equivale a add
+; -> TODO - -: equivale a sub
 
 
 ; Retorna True si el valor no es escalar y
