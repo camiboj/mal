@@ -21,6 +21,7 @@
 (declare my_list)
 (declare my_lt)
 (declare my_not)
+(declare my_null)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -169,6 +170,7 @@
                          (igual? f 'list) (my_list lae)
                          (igual? f 'lt) (my_lt lae)
                          (igual? f 'not) (my_not lae)
+                         (igual? f 'null) (my_null lae)
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)
@@ -194,7 +196,7 @@
 ; -> OK - list: retorna una lista formada por los args.
 ; -> OK - lt: retorna t si el 1° núm. es menor que el 2°
 ; -> OK - not: retorna la negación de un valor
-; -> TODO - null: retorna t si un elemento es
+; -> OK - null: retorna t si un elemento es nil
 ; -> TODO - print: imprime un elemento
 ; -> TODO - read: retorna la lectura de un elemento
 ; -> TODO - rest: retorna una lista sin su 1ra. posición
@@ -596,6 +598,10 @@
 
 (defn my_not [lae]
   (evaluar_bool lae not)
+  )
+
+(defn my_null [lae]
+  (evaluar_bool lae nil?)
   )
 
 (repl)
