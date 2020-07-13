@@ -2,7 +2,6 @@
 
 ## casos
 ```clojure
-
 >>> (reverse nil)
  nil
 >>> (reverse '())
