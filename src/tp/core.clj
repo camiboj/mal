@@ -15,6 +15,7 @@
 (declare my_cons)
 (declare my_equal)
 (declare my_eval)
+(declare my_ge)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -157,6 +158,7 @@
                          (igual? f 'cons) (my_cons lae)
                          (igual? f 'equal) (my_equal lae)
                          (igual? f 'eval) (my_eval lae amb-global amb-local)
+                         (igual? f 'ge) (my_ge lae)
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)
@@ -174,9 +176,9 @@
 ; -> OK - cons: retorna inserción de
 ; -> OK - env: retorna el ambiente
 ; -> OK - equal: retorna t si dos elementos
-; -> TODO - eval: retorna la evaluación de
+; -> OK - eval: retorna la evaluación de
 ; -> OK - first: retorna la 1ra. posición de una lista
-; -> TODO - ge: retorna t si el 1° núm.
+; -> OK - ge: retorna t si el 1° núm. es mayor o igual que el 2°
 ; -> TODO - gt: retorna t si el 1° núm. es mayor que el 2°
 ; -> TODO - length: retorna la longitud de una lista
 ; -> TODO - list: retorna una lista formada por los args.
@@ -518,6 +520,18 @@
           (igual? param nil) nil
           ;(not (seq? param)) (list '*error* 'list 'expected param)
           true (first (evaluar param amb-global amb-local))
+          )
+    )
+  )
+
+(defn my_ge [lae]
+  (let [ari (controlar-aridad lae 2), param_0 (nil_a_lista (first lae)), param_1 (nil_a_lista (second lae))]
+    (cond (seq? ari) ari
+          (igual? param_0 nil) nil
+          (not (number? param_0)) (list '*error* 'number 'expected param_0)
+          (not (number? param_1)) (list '*error* 'number 'expected param_1)
+          (>= param_0 param_1) 't
+          true nil
           )
     )
   )
