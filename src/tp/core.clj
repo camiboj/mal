@@ -19,6 +19,7 @@
 (declare my_gt)
 (declare my_length)
 (declare my_list)
+(declare my_lt)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -165,6 +166,7 @@
                          (igual? f 'gt) (my_gt lae)
                          (igual? f 'length) (my_length lae)
                          (igual? f 'list) (my_list lae)
+                         (igual? f 'lt) (my_lt lae)
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)
@@ -550,6 +552,10 @@
 
 (defn my_gt [lae]
   (evaluar_comparaciones_numericas lae >)
+  )
+
+(defn my_lt [lae]
+  (evaluar_comparaciones_numericas lae <)
   )
 
 
