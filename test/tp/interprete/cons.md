@@ -12,7 +12,7 @@
 >>> (cons 1 nil)
  (1) 
 >>> (cons nil nil)
- (nil) ; (()) ARREGLAR
+ (nil)
 >>> (cons '() '())
  (nil)
 

@@ -506,6 +506,7 @@
   (let [ari (controlar-aridad lae 2), param_0 (nil_a_lista (first lae)), param_1 (nil_a_lista (second lae))]
     (cond (seq? ari) ari
           (not (seq? param_1)) (list '*error* 'not-implemented)
+          (and (seq? param_0) (empty? param_0)) (cons nil param_1)
           true (cons param_0 param_1)
           )
     )
