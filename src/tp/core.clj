@@ -10,6 +10,7 @@
 (declare buscar)
 (declare evaluar-cond)
 (declare evaluar-secuencia-en-cond)
+(declare my_reverse)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -147,11 +148,7 @@
                                            (list '*error* 'too-few-args)
                                            (try (reduce + lae)
                                                 (catch Exception e (list '*error* 'number-expected))))
-                         (igual? f 'reverse) (let [ari (controlar-aridad lae 1), param (first lae)]
-                                             (cond (seq? ari) ari
-                                                   (igual? param nil) nil
-                                                   (not (seq? param)) (list '*error* 'list 'expected (first lae))
-                                                   true (reverse param)))
+                         (igual? f 'reverse) (my_reverse lae)
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)
@@ -435,6 +432,17 @@
 (println "---   FIN   ---")
 ;;;;; fin log cond ;;;;;
 
+
+
+(defn my_reverse [lae]
+  (let [ari (controlar-aridad lae 1), param (first lae)]
+    (cond (seq? ari) ari
+          (igual? param nil) nil
+          (not (seq? param)) (list '*error* 'list 'expected (first lae))
+          true (reverse param)
+          )
+    )
+  )
 
 
 (repl)
