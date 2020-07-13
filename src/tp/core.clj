@@ -18,6 +18,7 @@
 (declare my_ge)
 (declare my_gt)
 (declare my_length)
+(declare my_list)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -163,6 +164,7 @@
                          (igual? f 'ge) (my_ge lae)
                          (igual? f 'gt) (my_gt lae)
                          (igual? f 'length) (my_length lae)
+                         (igual? f 'list) (my_list lae)
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)
@@ -184,8 +186,8 @@
 ; -> OK - first: retorna la 1ra. posición de una lista
 ; -> OK - ge: retorna t si el 1° núm. es mayor o igual que el 2°
 ; -> OK - gt: retorna t si el 1° núm. es mayor que el 2°
-; -> TODO - length: retorna la longitud de una lista
-; -> TODO - list: retorna una lista formada por los args.
+; -> OK - length: retorna la longitud de una lista
+; -> OK - list: retorna una lista formada por los args.
 ; -> TODO - lt: retorna t si el 1° núm. es menor que el 2°
 ; -> TODO - not: retorna la negación de un valor
 ; -> TODO - null: retorna t si un elemento es
@@ -557,6 +559,14 @@
           (and (not (seq? param)) (not (string? param))) (list '*error* 'arg-wrong-type param)
           true (count param)
           )
+    )
+  )
+
+
+(defn my_list [lae]
+  (case
+    (< (count lae) 1) nil
+    true lae
     )
   )
 
