@@ -100,6 +100,18 @@
           (igual? (first expre) 'cond) (evaluar-cond (next expre) amb-global amb-local)
           true (aplicar (first (evaluar (first expre) amb-global amb-local)) (map (fn [x] (first (evaluar x amb-global amb-local))) (next expre)) amb-global amb-local))))
 
+; cond: macro (evalúa múltiples condiciones)
+; de: macro (define función y la liga
+; exit: sale del intérprete
+; if: forma especial (evalúa una condición)
+; lambda: macro (define una func.
+; load: carga un archivo
+; or: macro (evalúa mientras no obtenga
+; quote: forma especial (impide evalua
+; setq: forma especial (liga símbolo a valor)
+
+
+
 ; Aplica una funcion a una lista de argumentos evaluados, usando los ambientes global y local. Siempre retorna una lista con un resultado y un ambiente.
 ; Si la aplicacion falla, el resultado es una lista con '*error* como primer elemento, por ejemplo: (list '*error* 'arg-wrong-type) y el ambiente es el ambiente global.
 ; Aridad 4: Recibe la func., la lista de args. evaluados y los ambs. global y local. Se llama recursivamente agregando 2 args.: la func. revisada y la lista de args. revisada.
@@ -377,8 +389,6 @@
     )
   )
 
-
-
 ; Evalua el cuerpo de una macro COND. Siempre retorna una lista con un resultado y un ambiente.
 ; Recibe una lista de sublistas (cada una de las cuales tiene una condicion en su 1ra. posicion) y los ambientes global y local
 ; Si la lista es nil, el resultado es nil y el ambiente retornado es el global.
@@ -394,6 +404,32 @@
       )
     )
   )
+
+
+
+
+;;;;; usar como log pata cond ;;;;;
+(defn f [lis amb-global amb-local]
+  (println "____ EVALUAR COND ___ ")
+  (print "  ___ lis: ")
+  (println lis)
+  (print "  ___ global: ")
+  (println amb-global)
+  (print "  ___ local: ")
+  (println amb-local)
+  (let [variable (evaluar-cond lis amb-global amb-local)]
+    (print "  ___ resultado: ")
+    (println variable)
+    )
+  )
+
+
+(println "--- testiro ----")
+; (println (f (list (list 't 't 't)) (list '+ 'add 't 't 'nil 'nil) (list)))
+
+(println "---   FIN   ---")
+;;;;; fin log cond ;;;;;
+
 
 
 (repl)
