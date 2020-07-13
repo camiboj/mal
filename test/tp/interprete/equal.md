@@ -10,11 +10,11 @@
 t
 >>> (equal nil '())
 t
->>> (equal '(1 2) (1 2))
+>>> (equal '(1 2) '(1 2))
 t
 
-(equal 1 1 1)
->>> error* too-many-args 
+>>> (equal 1 1 1)
+ error* too-many-args 
 >>> (equal 1)
 error* too-few-args 
 ```
