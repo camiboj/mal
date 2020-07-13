@@ -193,7 +193,7 @@
 ; -> OK - length: retorna la longitud de una lista
 ; -> OK - list: retorna una lista formada por los args.
 ; -> OK - lt: retorna t si el 1° núm. es menor que el 2°
-; -> TODO - not: retorna la negación de un valor
+; -> OK - not: retorna la negación de un valor
 ; -> TODO - null: retorna t si un elemento es
 ; -> TODO - print: imprime un elemento
 ; -> TODO - read: retorna la lectura de un elemento
@@ -201,8 +201,8 @@
 ; -> OK - reverse: retorna una lista
 ; -> TODO - sub: retorna la resta de los argumentos
 ; -> TODO - terpri: imprime un salto de línea
-; -> TODO - +: equivale a add
-; -> TODO - -: equivale a sub
+; -> OK - +: equivale a add
+; -> OK - -: equivale a sub
 
 
 ; Retorna True si el valor no es escalar y
@@ -577,17 +577,26 @@
     )
   )
 
-(defn my_not [lae]
-  (let [ari (controlar-aridad lae 1), param (nil_a_lista (first lae))]
+
+
+
+(defn convert_from_bool [elem]
+  (if elem 't nil)
+  )
+
+
+(defn evaluar_bool [lae f]
+  (let [ari (controlar-aridad lae 1), param (first lae)]
     (cond
       (seq? ari) ari
-      (nil? param) 't
-      (and (seq? param) (empty? param)) 't
-      true nil
+      true (convert_from_bool (f param))
       )
     )
   )
 
+(defn my_not [lae]
+  (evaluar_bool lae not)
+  )
 
 (repl)
 
