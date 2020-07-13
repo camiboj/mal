@@ -2,21 +2,21 @@
 
 ## casos
 ```clojure
-; nil
-(reverse nil)
-; nil
-(reverse '())
-; (3 2 1)
-(reverse '(1 2 3))
 
+>>> (reverse nil)
+ nil
+>>> (reverse '())
+ nil
+>>> (reverse '(1 2 3))
+ (3 2 1)
 
-; *error* list expectect
-(reverse 1)
+>>> (reverse 1)
+ *error* list expectect
+
 
 ;;; recibir solo 2 parametro
-;(*error* too-many-args)
-(reverse '(1) '(2))
-
-;(*error* too-few-args)
-(reverse)
+>>> (reverse '(1) '(2))
+ (*error* too-many-args)
+>>> (reverse)
+ (*error* too-few-args)
 ```
