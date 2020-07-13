@@ -12,6 +12,7 @@
 (declare evaluar-secuencia-en-cond)
 (declare my_reverse)
 (declare my_append)
+(declare my_cons)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -151,6 +152,7 @@
                                                 (catch Exception e (list '*error* 'number-expected))))
                          (igual? f 'reverse) (my_reverse lae)
                          (igual? f 'append) (my_append lae)
+                         (igual? f 'cons) (my_cons lae)
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)
@@ -465,7 +467,20 @@
     )
   )
 
+
+(defn my_cons [lae]
+  (let [ari (controlar-aridad lae 2), param_0 (nil_a_lista (first lae)), param_1 (nil_a_lista (second lae))]
+    (cond (seq? ari) ari
+          ; (igual? param_0 nil) nil
+          (not (seq? param_1)) (list '*error* 'not-implemented)
+          true (cons param_0 param_1)
+          )
+    )
+  )
+
 (repl)
+
+
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
 
 ; Falta implementar las 9 funciones auxiliares (actualizar-amb, controlar-aridad, imprimir, buscar, etc.)
