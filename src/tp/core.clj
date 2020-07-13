@@ -171,7 +171,7 @@
 ; -> OK - append: retorna la fusión
 ; -> OK - cons: retorna inserción de
 ; -> OK - env: retorna el ambiente
-; -> TODO - equal: retorna t si dos elementos
+; -> OK - equal: retorna t si dos elementos
 ; -> TODO - eval: retorna la evaluación de
 ; -> OK - first: retorna la 1ra. posición de una lista
 ; -> TODO - ge: retorna t si el 1° núm.
