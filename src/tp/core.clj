@@ -524,16 +524,21 @@
     )
   )
 
-(defn my_ge [lae]
+
+
+(defn evaluar_comparaciones_numericas [lae f]
   (let [ari (controlar-aridad lae 2), param_0 (nil_a_lista (first lae)), param_1 (nil_a_lista (second lae))]
     (cond (seq? ari) ari
-          (igual? param_0 nil) nil
           (not (number? param_0)) (list '*error* 'number 'expected param_0)
           (not (number? param_1)) (list '*error* 'number 'expected param_1)
-          (>= param_0 param_1) 't
+          (f param_0 param_1) 't
           true nil
           )
     )
+  )
+
+(defn my_ge [lae]
+  (evaluar_comparaciones_numericas lae >=)
   )
 
 (repl)
