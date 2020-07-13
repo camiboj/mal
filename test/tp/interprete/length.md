@@ -15,7 +15,7 @@
  (*error* arg-wrong-type 1)
 
 
-;;; cant(parametro) != 2
+;;; cant(parametro) != 1
 >>> (length '(1) '(2))
  (*error* too-many-args)
 >>> (length)

@@ -15,7 +15,7 @@
 >>> (eval 1 '(2))
  (*error* list expectect)
 
-;;; cant(parametro) != 2
+;;; cant(parametro) != 1
 >>> (eval '(1) '(2))
  (*error* too-many-args)
 >>> (eval)

@@ -20,6 +20,7 @@
 (declare my_length)
 (declare my_list)
 (declare my_lt)
+(declare my_not)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -167,6 +168,7 @@
                          (igual? f 'length) (my_length lae)
                          (igual? f 'list) (my_list lae)
                          (igual? f 'lt) (my_lt lae)
+                         (igual? f 'not) (my_not lae)
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)
@@ -190,7 +192,7 @@
 ; -> OK - gt: retorna t si el 1° núm. es mayor que el 2°
 ; -> OK - length: retorna la longitud de una lista
 ; -> OK - list: retorna una lista formada por los args.
-; -> TODO - lt: retorna t si el 1° núm. es menor que el 2°
+; -> OK - lt: retorna t si el 1° núm. es menor que el 2°
 ; -> TODO - not: retorna la negación de un valor
 ; -> TODO - null: retorna t si un elemento es
 ; -> TODO - print: imprime un elemento
@@ -527,7 +529,6 @@
   (let [ari (controlar-aridad lae 1), param (nil_a_lista (first lae))]
     (cond (seq? ari) ari
           (igual? param nil) nil
-          ;(not (seq? param)) (list '*error* 'list 'expected param)
           true (first (evaluar param amb-global amb-local))
           )
     )
@@ -562,7 +563,6 @@
 (defn my_length [lae]
   (let [ari (controlar-aridad lae 1), param (nil_a_lista (first lae))]
     (cond (seq? ari) ari
-          ; (igual? param nil) nil
           (and (not (seq? param)) (not (string? param))) (list '*error* 'arg-wrong-type param)
           true (count param)
           )
@@ -574,6 +574,17 @@
   (case
     (< (count lae) 1) nil
     true lae
+    )
+  )
+
+(defn my_not [lae]
+  (let [ari (controlar-aridad lae 1), param (nil_a_lista (first lae))]
+    (cond
+      (seq? ari) ari
+      (nil? param) 't
+      (and (seq? param) (empty? param)) 't
+      true nil
+      )
     )
   )
 
