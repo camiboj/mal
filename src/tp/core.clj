@@ -22,6 +22,7 @@
 (declare my_lt)
 (declare my_not)
 (declare my_null)
+(declare my_terpri)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -171,6 +172,7 @@
                          (igual? f 'lt) (my_lt lae)
                          (igual? f 'not) (my_not lae)
                          (igual? f 'null) (my_null lae)
+                         (igual? f 'terpri) (my_terpri lae)
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)
@@ -603,6 +605,15 @@
 (defn my_null [lae]
   (evaluar_bool lae nil?)
   )
+
+(defn my_terpri [lae]
+  (let [ari (controlar-aridad lae 0)]
+    (cond
+      (seq? ari) ari
+      true (do (println) nil))
+    )
+  )
+
 
 (repl)
 
