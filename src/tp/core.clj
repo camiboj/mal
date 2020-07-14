@@ -23,6 +23,7 @@
 (declare my_not)
 (declare my_null)
 (declare my_terpri)
+(declare my_prin3)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -173,6 +174,7 @@
                          (igual? f 'not) (my_not lae)
                          (igual? f 'null) (my_null lae)
                          (igual? f 'terpri) (my_terpri lae)
+                         (igual? f 'prin3) (my_prin3 lae)
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)
@@ -199,12 +201,12 @@
 ; -> OK - lt: retorna t si el 1° núm. es menor que el 2°
 ; -> OK - not: retorna la negación de un valor
 ; -> OK - null: retorna t si un elemento es nil
-; -> TODO - print: imprime un elemento
+; -> TODO - prin3: imprime un elemento
 ; -> TODO - read: retorna la lectura de un elemento
 ; -> TODO - rest: retorna una lista sin su 1ra. posición
 ; -> OK - reverse: retorna una lista
 ; -> TODO - sub: retorna la resta de los argumentos
-; -> TODO - terpri: imprime un salto de línea
+; -> OK - terpri: imprime un salto de línea
 ; -> OK - +: equivale a add
 ; -> OK - -: equivale a sub
 
@@ -607,13 +609,20 @@
   )
 
 (defn my_terpri [lae]
-  (let [ari (controlar-aridad lae 0)]
-    (cond
-      (seq? ari) ari
-      true (do (println) nil))
-    )
+  (cond
+    (> (count lae) 0) (list '*error 'stream 'expected (first lae))
+    true (do (println) nil))
   )
 
+(defn my_prin3 [lae]
+  (let [ari (controlar-aridad lae 1), param (first lae)]
+    (cond
+      (> (count lae) 1) (list '*error 'stream 'expected (second lae))
+      (seq? ari) ari
+      true (do (println param) param)
+      )
+    )
+  )
 
 (repl)
 

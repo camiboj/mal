@@ -10,5 +10,5 @@
 
 ;;; cant(parametro) != 1
 >>> (terpri 1)
- (*error* too-many-args)
+ (*error* stream expected 1)
 ```
