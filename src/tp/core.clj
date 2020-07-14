@@ -24,6 +24,7 @@
 (declare my_null)
 (declare my_terpri)
 (declare my_prin3)
+(declare my_rest)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -179,6 +180,7 @@
                          (igual? f 'null) (my_null lae)
                          (igual? f 'terpri) (my_terpri lae)
                          (igual? f 'prin3) (my_prin3 lae)
+                         (igual? f 'rest) (my_rest lae)
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)
@@ -207,12 +209,12 @@
 ; -> OK - null: retorna t si un elemento es nil
 ; -> OK - prin3: imprime un elemento
 ; -> TODO - read: retorna la lectura de un elemento
-; -> TODO - rest: retorna una lista sin su 1ra. posición
+; -> OK - rest: retorna una lista sin su 1ra. posición
 ; -> OK - reverse: retorna una lista
-; -> TODO fix - sub: retorna la resta de los argumentos
+; -> OK - sub: retorna la resta de los argumentos
 ; -> OK - terpri: imprime un salto de línea
 ; -> OK - +: equivale a add
-; -> TODO fix - -: equivale a sub
+; -> OK - -: equivale a sub
 
 
 ; Retorna True si el valor no es escalar y
@@ -625,6 +627,17 @@
       (seq? ari) ari
       true (do (println param) param)
       )
+    )
+  )
+
+
+(defn my_rest [lae]
+  (let [ari (controlar-aridad lae 1), param (first lae)]
+    (cond (seq? ari) ari
+          (nil? param) nil
+          (not (list? param)) (list '*error* 'list-expected param)
+          true (rest param)
+          )
     )
   )
 
