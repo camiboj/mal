@@ -161,6 +161,10 @@
                                            (list '*error* 'too-few-args)
                                            (try (reduce + lae)
                                                 (catch Exception e (list '*error* 'number-expected))))
+                         (igual? f 'sub) (if (< (count lae) 2)
+                                           (list '*error* 'too-few-args)
+                                           (try (reduce - lae)
+                                                (catch Exception e (list '*error* 'number-expected))))
                          (igual? f 'reverse) (my_reverse lae)
                          (igual? f 'append) (my_append lae)
                          (igual? f 'cons) (my_cons lae)
@@ -201,14 +205,14 @@
 ; -> OK - lt: retorna t si el 1° núm. es menor que el 2°
 ; -> OK - not: retorna la negación de un valor
 ; -> OK - null: retorna t si un elemento es nil
-; -> TODO - prin3: imprime un elemento
+; -> OK - prin3: imprime un elemento
 ; -> TODO - read: retorna la lectura de un elemento
 ; -> TODO - rest: retorna una lista sin su 1ra. posición
 ; -> OK - reverse: retorna una lista
-; -> TODO - sub: retorna la resta de los argumentos
+; -> TODO fix - sub: retorna la resta de los argumentos
 ; -> OK - terpri: imprime un salto de línea
 ; -> OK - +: equivale a add
-; -> OK - -: equivale a sub
+; -> TODO fix - -: equivale a sub
 
 
 ; Retorna True si el valor no es escalar y
