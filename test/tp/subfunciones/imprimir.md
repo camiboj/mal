@@ -19,7 +19,7 @@
 
 ## imprimit vector strings
 ```clojure
-(def elem (list "a" "b"))
+(def elem '("a" "b"))
 ; ("a" "b")
 ; (a b)
 (println (imprimir elem))
@@ -40,6 +40,3 @@
 ; (a b)
 (println (imprimir elem))
 ```
-
-# imprrimir (Aridad 0)
-**NI IDEA, NO LO ENTENDI**

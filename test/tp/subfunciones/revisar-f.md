@@ -8,8 +8,8 @@
 ## casos
 ```clojure
 ; '*error* "a"
-(println (revisar-f (list '*error* "a")))
+(println (revisar-f '(*error* "a")))
 
 ; nil
-(println (revisar-f (list 'otro "a")))
+(println (revisar-f '(otro "a")))
 ```

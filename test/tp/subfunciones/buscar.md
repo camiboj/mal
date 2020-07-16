@@ -10,7 +10,7 @@
 ```clojure
 (def ambiente (vector "clave1" "valor1" "clave2" "valor2" "clave3" "valor3"))
 (def clave "clave4")
-; (*error* unbound)
+; (*error* unbound-symbol clave4)
 (println (buscar clave ambiente))
 
 

@@ -9,7 +9,7 @@
 
 ## aridad correcta (retorna aridad)
 ```clojure
-(def lis (list 'a 'b))
+(def lis '('a 'b))
 (def val-esperado 2)
 ; -> 2
 (println (controlar-aridad lis val-esperado))
@@ -17,7 +17,7 @@
 
 ## menos parametros (retorna error)
 ```clojure
-(def lis (list 'a 'b))
+(def lis '('a 'b))
 (def val-esperado 3)
 ; -> ('*error* 'too-few-args)
 (println (controlar-aridad lis val-esperado))
@@ -25,7 +25,7 @@
 
 ## mas parametros (retorna error)
 ```clojure
-(def lis (list 'a 'b))
+(def lis '('a 'b))
 (def val-esperado 1)
 ; -> ('*error* 'too-many-args)
 (println (controlar-aridad lis val-esperado))```

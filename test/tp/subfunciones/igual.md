@@ -9,9 +9,9 @@
 ```
 ## iguales
 ```clojure
-(println (igual? (list) nil))
-(println (igual? nil (list)))
-(println (igual? (list) (list)))
+(println (igual? '() nil))
+(println (igual? nil '()))
+(println (igual? '() '()))
 (println (igual? nil nil))
 (println (igual? "A" "a"))
 (println (igual? "a" "A"))
@@ -20,14 +20,14 @@
 ```
 ## no iguales
 ```clojure
-(println (igual? (list) "A"))
+(println (igual? '() "A"))
 (println (igual? nil "A"))
-(println (igual? "A" (list)))
+(println (igual? "A" '()))
 (println (igual? "A" nil))
 (println (igual? "A" "aa"))
-(println (igual? (list 1) nil))
-(println (igual? nil (list 1)))
-(println (igual? "a" (list "a")))
+(println (igual? '(1) nil))
+(println (igual? nil '(1)))
+(println (igual? "a" '("a")))
 ```
 
 ## comparar literales (IMPORTANTE)
