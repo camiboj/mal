@@ -11,10 +11,6 @@
 >>> (eval '())
  nil
 
-
->>> (eval 1 '(2))
- (*error* list expectect)
-
 ;;; cant(parametro) != 1
 >>> (eval '(1) '(2))
  (*error* too-many-args)
@@ -23,7 +19,5 @@
 
 ;;; errores al aplicar la lista
 >>> (eval '(1))
- (list '*error* 'non-applicable-type 1)
->>> (eval '(reverse 1))
- *error* list expectect 1
+ (*error* non-applicable-type 1)
 ```

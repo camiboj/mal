@@ -13,7 +13,7 @@
 
 
 >>> (append 1 '(2))
- (*error* list expectect 1)
+ (*error* list expected 1)
 
 ;;; cant(parametro) != 2
 >>> (append '(1) '(2) '(3))

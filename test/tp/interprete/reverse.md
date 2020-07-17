@@ -10,7 +10,7 @@
  (3 2 1)
 
 >>> (reverse 1)
- *error* list expectect 1
+ *error* list expected 1
 
 
 ;;; recibir solo 2 parametro

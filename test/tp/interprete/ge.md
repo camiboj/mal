@@ -11,9 +11,9 @@
 
 
 >>> (ge '(1) 2)
- (*error* number-expectect (1))
+ (*error* number expected (1))
 >>> (ge 1 '(2))
- (*error* number-expectect (2))
+ (*error* number expected (2))
 
 
 ;;; cant(parametro) != 2

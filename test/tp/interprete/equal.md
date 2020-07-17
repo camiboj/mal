@@ -2,10 +2,10 @@
 
 ## casos
 ```clojure
-(equal 1 1)
->>> t
-(equal 1 2)
->>> nil
+>>>(equal 1 1)
+ t
+>>>(equal 1 2)
+ nil
 >>> (equal '() nil)
 t
 >>> (equal nil '())

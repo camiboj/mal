@@ -151,11 +151,11 @@
                          (igual? f 'add) (if (< (count lae) 2)
                                            (list '*error* 'too-few-args)
                                            (try (reduce + lae)
-                                                (catch Exception e (list '*error* 'number-expected))))
+                                                (catch Exception e (list '*error* 'number 'expected))))
                          (igual? f 'sub) (if (< (count lae) 2)
                                            (list '*error* 'too-few-args)
                                            (try (reduce - lae)
-                                                (catch Exception e (list '*error* 'number-expected))))
+                                                (catch Exception e (list '*error* 'number 'expected))))
                          (igual? f 'reverse) (my_reverse lae)
                          (igual? f 'append) (my_append lae)
                          (igual? f 'cons) (my_cons lae)
@@ -534,14 +534,14 @@
 
 (defn my_terpri [lae]
   (cond
-    (> (count lae) 0) (list '*error 'stream 'expected (first lae))
+    (> (count lae) 0) (list '*error* 'stream 'expected (first lae))
     true (do (println) nil))
   )
 
 (defn my_prin3 [lae]
   (let [ari (controlar-aridad lae 1), param (first lae)]
     (cond
-      (> (count lae) 1) (list '*error 'stream 'expected (second lae))
+      (> (count lae) 1) (list '*error* 'stream 'expected (second lae))
       (seq? ari) ari
       true (do (println param) param)
       )
