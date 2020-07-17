@@ -574,6 +574,18 @@
   )
 
 
+(defn not_the_one? [amb-global amb-local lis]
+  (not (first (evaluar (first lis) amb-global amb-local)))
+  )
+
+(defn _evaluar-cond [lis amb-global amb-local]
+  (let [droped (drop-while (partial not_the_one? amb-global amb-local) lis)]
+    (if (= (count droped) 0)
+      (list nil amb-global)
+      (evaluar-secuencia-en-cond (rest (first droped)) amb-global amb-local))
+    )
+  )
+
 ; Evalua el cuerpo de una macro COND. Siempre retorna una lista con un resultado y un ambiente.
 ; Recibe una lista de sublistas (cada una de las cuales tiene una condicion en su 1ra. posicion) y los ambientes global y local
 ; Si la lista es nil, el resultado es nil y el ambiente retornado es el global.
@@ -582,28 +594,11 @@
 (defn evaluar-cond [lis amb-global amb-local]
   (if (nil? lis)
     (list nil amb-global)
-    (let [cabeza_primer_sublista (ffirst lis), cola_primer_sublista (fnext lis)]
-      (if-not (nil? (evaluar cabeza_primer_sublista amb-global amb-local))
-        (evaluar-secuencia-en-cond cola_primer_sublista amb-global amb-local)
-        (evaluar-cond (next lis) amb-global amb-local))
-      )
+    (_evaluar-cond lis amb-global amb-local)
     )
   )
 
 ;;;;; usar como log pata cond ;;;;;
-(defn f [lis amb-global amb-local]
-  (println "____ EVALUAR COND ___ ")
-  (print "  ___ lis: ")
-  (println lis)
-  (print "  ___ global: ")
-  (println amb-global)
-  (print "  ___ local: ")
-  (println amb-local)
-  (let [variable (evaluar-cond lis amb-global amb-local)]
-    (print "  ___ resultado: ")
-    (println variable)
-    )
-  )
 
 
 (defn my_or [lae amb-local amb-global]

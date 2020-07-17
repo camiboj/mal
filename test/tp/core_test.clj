@@ -266,6 +266,9 @@
   (is (= '((*error* stream expected 1) (terpri terpri nil nil)) (evaluar '(terpri 1) '(terpri terpri nil nil) nil)))
 
   )
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; TODO
 ; (deftest test-load
 ;   (is (= (load-file "tlc-lisp.clj")))
@@ -273,14 +276,13 @@
 
 
 
-; (deftest test-evaluar-cond
-;   (is (= '(nil (equal equal setq setq)) (evaluar-cond nil '(equal equal setq setq) nil)))
-;   (is (= '(nil (equal equal first first)) (evaluar-cond '(((equal 'a 'b) (setq x 1))) '(equal equal first first) nil)))
-;   ; (2 (equal equal setq setq y 2))
-;   (is (= '((equal equal setq setq) nil) (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2))) '(equal equal setq setq) nil)))
-;   ; (3 (equal equal setq setq y 2 z 3))
-;   (is (= '((equal equal setq setq) nil) '(evaluar-cond ((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2) (setq z 3))) '(equal equal setq setq) nil))
-;   )
+(deftest test-evaluar-cond
+  (is (= '(nil (equal equal setq setq)) (evaluar-cond nil '(equal equal setq setq) nil)))
+  (is (= '(nil (equal equal first first)) (evaluar-cond '(((equal 1 2) (setq x 1))) '(equal equal first first) nil)))
+  (is (= '(nil (equal equal first first)) (evaluar-cond '(((equal 'a 'b) (setq x 1))) '(equal equal first first) nil)))
+  (is (= '(2 (y 2 equal equal setq setq)) (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2))) '(equal equal setq setq) nil)))
+  (is (= '(3 (z 3 y 2 equal equal setq setq)) (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2) (setq z 3))) '(equal equal setq setq) nil)))
+)
 
 
 
