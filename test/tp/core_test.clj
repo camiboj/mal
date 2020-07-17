@@ -101,29 +101,35 @@
                       null null or or prin3 prin3 quote quote read read rest rest reverse reverse setq setq sub sub
                       t t terpri terpri + add - sub))
 
-(deftest test-append
-  (is (= '((1) (append append nil nil) nil)) (evaluar '(append '(1) nil) '(append append nil nil) nil))
-  (is (= '((1) (append append nil nil) nil)) (evaluar '(append nil '(1)) '(append append nil nil) nil))
-  (is (= '(nil (append append nil nil) nil)) (evaluar '(append nil nil) '(append append nil nil) nil))
-  (is (= '((1 2) (append append nil nil) nil)) (evaluar '(append '(1) '(2)) '(append append nil nil) nil))
-  (is (= '((*error* list expectect 1) (append append nil nil) nil)) (evaluar '(append 1 '(2)) '(append append nil nil) nil))
-  (is (= '((*error* too-many-args) (append append nil nil) nil)) (evaluar '(append '(1) '(2) '(3)) '(append append nil nil) nil))
-  (is (= '((*error* too-few-args) (append append nil nil) nil)) (evaluar '(append '(1)) '(append append nil nil) nil))
-  (is (= '((list '*error* 'not-implemented) (append append nil nil) nil)) (evaluar '(append '(1) 2) '(append append nil nil) nil))
-  (is (= '((list '*error* 'not-implemented) (append append nil nil) nil)) (evaluar '(append '(1) "a") '(append append nil nil) nil))
+(defn test-interprete [output input]
+  (is (= (list output amb-global nil)) (evaluar input amb-global nil))
   )
 
+
+(deftest test-append
+  (test-interprete '(1) '(append '(1) nil))
+  (test-interprete '(1) '(append nil '(1)))
+  (test-interprete '(nil) '(append nil nil))
+  (test-interprete '(1 2) '(append '(1) '(2)))
+  (test-interprete '(*error* list expectect 1) '(append 1 '(2)))
+  (test-interprete '(*error* too-many-args) '(append '(1) '(2) '(3)))
+  (test-interprete '(*error* too-few-args) '(append '(1)))
+  (test-interprete '(list '*error* 'not-implemented) '(append '(1) 2))
+  (test-interprete '(list '*error* 'not-implemented) '(append '(1) "a"))
+  )
+
+
 (deftest test-cons
-  (is (= '((0 1 2 3) (cons cons nil nil) nil)) (evaluar '(cons 0 '(1 2 3)) '(cons cons nil nil) nil))
-  (is (= '(((1 2) 3) (cons cons nil nil) nil)) (evaluar '(cons '(1 2) '(3)) '(cons cons nil nil) nil))
-  (is (= '((1) (cons cons nil nil) nil)) (evaluar '(cons 1 '()) '(cons cons nil nil) nil))
-  (is (= '((1) (cons cons nil nil) nil)) (evaluar '(cons 1 nil) '(cons cons nil nil) nil))
-  (is (= '((nil) (cons cons nil nil) nil)) (evaluar '(cons nil nil) '(cons cons nil nil) nil))
-  (is (= '((nil) (cons cons nil nil) nil)) (evaluar '(cons '() '()) '(cons cons nil nil) nil))
-  (is (= '((list '*error* 'too-few-args) (cons cons nil nil) nil)) (evaluar '(cons '(1 2)) '(cons cons nil nil) nil))
-  (is (= '((list '*error* 'too-many-args) (cons cons nil nil) nil)) (evaluar '(cons '(1 2) '(3) '(4)) '(cons cons nil nil) nil))
-  (is (= '((*error* not-implemented) (cons cons nil nil) nil)) (evaluar '(cons '(1 2 3) 4) '(cons cons nil nil) nil))
-  (is (= '((*error* not-implemented) (cons cons nil nil) nil)) (evaluar '(cons '(1 2 3) "a") '(cons cons nil nil) nil))
+  (test-interprete '(0 1 2 3) '(cons 0 '(1 2 3)))
+  (test-interprete '((1 2) 3) '(cons '(1 2) '(3)))
+  (test-interprete '(1) '(cons 1 '()))
+  (test-interprete '(1) '(cons 1 nil))
+  (test-interprete '(nil) '(cons nil nil))
+  (test-interprete '(nil) '(cons '() '()))
+  (test-interprete '(list '*error* 'too-few-args) '(cons '(1 2)))
+  (test-interprete '(list '*error* 'too-many-args) '(cons '(1 2) '(3) '(4)))
+  (test-interprete '(*error* not-implemented) '(cons '(1 2 3) 4))
+  (test-interprete '(*error* not-implemented) '(cons '(1 2 3) "a"))
   )
 
 
