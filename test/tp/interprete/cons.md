@@ -2,28 +2,28 @@
 
 ## casos
 ```clojure
->>> (evaluar (cons 0 '(1 2 3)) '(cons cons nil nil) nil)
+>>> (cons 0 '(1 2 3))
  (0 1 2 3)
->>> (evaluar (cons '(1 2) '(3)) '(cons cons nil nil) nil)
+>>> (cons '(1 2) '(3))
  ((1 2) 3) 
 
->>> (evaluar (cons 1 '()) '(cons cons nil nil) nil)
+>>> (cons 1 '())
  (1) 
->>> (evaluar (cons 1 nil) '(cons cons nil nil) nil)
+>>> (cons 1 nil)
  (1) 
->>> (evaluar (cons nil nil) '(cons cons nil nil) nil)
+>>> (cons nil nil)
  (nil)
->>> (evaluar (cons '() '()) '(cons cons nil nil) nil)
+>>> (cons '() '())
  (nil)
 
->>> (evaluar (cons '(1 2)) '(cons cons nil nil) nil)
+>>> (cons '(1 2))
  (list '*error* 'too-few-args)
->>> (evaluar (cons '(1 2) '(3) '(4)) '(cons cons nil nil) nil)
+>>> (cons '(1 2) '(3) '(4))
  (list '*error* 'too-many-args)
 
 
->>> (evaluar (cons '(1 2 3) 4) '(cons cons nil nil) nil)
+>>> (cons '(1 2 3) 4)
  (*error* not-implemented)
->>> (evaluar (cons '(1 2 3) "a") '(cons cons nil nil) nil)
+>>> (cons '(1 2 3) "a")
  (*error* not-implemented)
 ```
