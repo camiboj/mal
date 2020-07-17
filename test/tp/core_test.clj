@@ -102,6 +102,13 @@
                       null null or or prin3 prin3 quote quote read read rest rest reverse reverse setq setq sub sub
                       t t terpri terpri + add - sub))
 
+(deftest test-evaluar-cond
+  (is (= '(nil (equal equal setq setq)) (evaluar-cond nil '(equal equal setq setq) nil)))
+  (is (= '(nil (equal equal first first)) (evaluar-cond '(((equal 1 2) (setq x 1))) '(equal equal first first) nil)))
+  (is (= '(nil (equal equal first first)) (evaluar-cond '(((equal 'a 'b) (setq x 1))) '(equal equal first first) nil)))
+  (is (= '(2 (y 2 equal equal setq setq)) (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2))) '(equal equal setq setq) nil)))
+  (is (= '(3 (z 3 y 2 equal equal setq setq)) (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2) (setq z 3))) '(equal equal setq setq) nil)))
+  )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; INTERPRETE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -274,15 +281,6 @@
 ;   (is (= (load-file "tlc-lisp.clj")))
 ;  )
 
-
-
-(deftest test-evaluar-cond
-  (is (= '(nil (equal equal setq setq)) (evaluar-cond nil '(equal equal setq setq) nil)))
-  (is (= '(nil (equal equal first first)) (evaluar-cond '(((equal 1 2) (setq x 1))) '(equal equal first first) nil)))
-  (is (= '(nil (equal equal first first)) (evaluar-cond '(((equal 'a 'b) (setq x 1))) '(equal equal first first) nil)))
-  (is (= '(2 (y 2 equal equal setq setq)) (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2))) '(equal equal setq setq) nil)))
-  (is (= '(3 (z 3 y 2 equal equal setq setq)) (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2) (setq z 3))) '(equal equal setq setq) nil)))
-)
 
 
 
