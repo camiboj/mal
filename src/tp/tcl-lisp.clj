@@ -108,6 +108,8 @@
                                                true (list expre amb-global))
           (igual? (first expre) 'or) (my_or (next expre) amb-global amb-local)
           (igual? (first expre) 'cond) (evaluar-cond (next expre) amb-global amb-local)
+          (igual? (first expre) 'load) (cargar-arch (next expre) amb-global amb-local (second expre))
+
           true (aplicar (first (evaluar (first expre) amb-global amb-local)) (map (fn [x] (first (evaluar x amb-global amb-local))) (next expre)) amb-global amb-local))))
 
 ; -> OK - cond: macro (evalúa múltiples condiciones)
@@ -617,7 +619,7 @@
     (_my_or lis amb-global amb-local)
     )
   )
-
+(repl)
 
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
 
