@@ -82,7 +82,7 @@
 
 (deftest test-revisar-lea
   (is (= nil (revisar-lae '(1 add first))))
-  ; (is (= '(*error* too-many-args) (revisar-lae '(1 add '(*error* too-many-args) first))))
+  (is (= '(*error* too-many-args) (revisar-lae '(1 add (*error* too-many-args) first))))
   )
 
 (deftest test-buscar
@@ -94,6 +94,23 @@
 (deftest test-evaluar-secuencia-en-cond
   (is (= '(2 (y 2 setq setq)) (evaluar-secuencia-en-cond '((setq y 2)) '(setq setq) nil)))
   (is (= '(3 (z 3 y 2 setq setq)) (evaluar-secuencia-en-cond '((setq y 2) (setq z 3)) '(setq setq) nil)))
+  )
+
+(def amb-global '(add add append append cond cond cons cons de de env env equal equal eval eval exit exit
+                      first first ge ge gt gt if if lambda lambda length length list list load load lt lt nil nil not not
+                      null null or or prin3 prin3 quote quote read read rest rest reverse reverse setq setq sub sub
+                      t t terpri terpri + add - sub))
+
+(deftest test-append
+  (is (= '((1) (append append nil nil) nil)) (evaluar '(append '(1) nil) '(append append nil nil) nil))
+  (is (= '((1) (append append nil nil) nil)) (evaluar '(append nil '(1)) '(append append nil nil) nil))
+  (is (= '(nil (append append nil nil) nil)) (evaluar '(append nil nil) '(append append nil nil) nil))
+  (is (= '((1 2) (append append nil nil) nil)) (evaluar '(append '(1) '(2)) '(append append nil nil) nil))
+  (is (= '((*error* list expectect 1) (append append nil nil) nil)) (evaluar '(append 1 '(2)) '(append append nil nil) nil))
+  (is (= '((*error* too-many-args) (append append nil nil) nil)) (evaluar '(append '(1) '(2) '(3)) '(append append nil nil) nil))
+  (is (= '((*error* too-few-args) (append append nil nil) nil)) (evaluar '(append '(1)) '(append append nil nil) nil))
+  (is (= '((list '*error* 'not-implemented) (append append nil nil) nil)) (evaluar '(append '(1) 2) '(append append nil nil) nil))
+  (is (= '((list '*error* 'not-implemented) (append append nil nil) nil)) (evaluar '(append '(1) "a") '(append append nil nil) nil))
   )
 
 

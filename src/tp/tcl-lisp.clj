@@ -390,7 +390,6 @@
 
 
 
-
 ; Busca una clave en un ambiente (una lista con claves en las posiciones pares [0, 2, 4...]
 ; y valores en las pares [1, 3, 5...] y retorna el val
 ; Si no la encuentra, retorna una lista con '*error* en la 1ra. pos., 'unbound

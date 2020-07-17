@@ -3,9 +3,9 @@
 ## casos
 ```clojure
 >>> (append '(1) nil)
- nil
+ (1)
 >>> (append nil '(1))
- nil
+ (1)
 >>> (append nil nil)
  nil
 >>> (append '(1) '(2))
