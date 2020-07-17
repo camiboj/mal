@@ -598,9 +598,25 @@
     )
   )
 
-;;;;; usar como log pata cond ;;;;;
+(defn not_true [amb-global amb-local condition]
+  (not (first (evaluar condition amb-global amb-local)))
+  )
 
+(defn _my_or [lis amb-global amb-local]
+  (let [droped (drop-while (partial not_true amb-global amb-local) lis)]
+    (if (= (count droped) 0)
+      (list nil amb-global)
+      (evaluar (first droped) amb-global amb-local)
+      )
+    )
+  )
 
+(defn my_or [lis amb-global amb-local]
+  (if (nil? lis)
+    (list nil amb-global)
+    (_my_or lis amb-global amb-local)
+    )
+  )
 
 
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
@@ -608,4 +624,3 @@
 ; Falta implementar las 9 funciones auxiliares (actualizar-amb, controlar-aridad, imprimir, buscar, etc.)
 
 ; Falta hacer que la carga del interprete en Clojure (tlc-lisp.clj) retorne true
-(repl)
