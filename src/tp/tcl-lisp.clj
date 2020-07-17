@@ -106,7 +106,7 @@
           (igual? (first expre) 'lambda) (cond (< (count (next expre)) 1) (list (list '*error* 'list 'expected nil) amb-global)
                                                (and (not (igual? (fnext expre) nil)) (not (seq? (fnext expre)))) (list (list '*error* 'list 'expected (fnext expre)) amb-global)
                                                true (list expre amb-global))
-          (igual? (first expre) 'or) (my_or (next expre) amb-local amb-global)
+          (igual? (first expre) 'or) (my_or (next expre) amb-global amb-local)
           (igual? (first expre) 'cond) (evaluar-cond (next expre) amb-global amb-local)
           true (aplicar (first (evaluar (first expre) amb-global amb-local)) (map (fn [x] (first (evaluar x amb-global amb-local))) (next expre)) amb-global amb-local))))
 
@@ -594,18 +594,13 @@
 (defn evaluar-cond [lis amb-global amb-local]
   (if (nil? lis)
     (list nil amb-global)
-    (_evaluar-cond lis amb-global amb-local)
+    (_evaluar-cond (first lis) amb-global amb-local)
     )
   )
 
 ;;;;; usar como log pata cond ;;;;;
 
 
-(defn my_or [lae amb-local amb-global]
-  (let [evaluated (map (partial evaluar amb-global amb-local) lae)]
-    (not-every? nil? evaluated)
-    )
-  )
 
 
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
@@ -613,3 +608,4 @@
 ; Falta implementar las 9 funciones auxiliares (actualizar-amb, controlar-aridad, imprimir, buscar, etc.)
 
 ; Falta hacer que la carga del interprete en Clojure (tlc-lisp.clj) retorne true
+(repl)

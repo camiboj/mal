@@ -104,10 +104,10 @@
 
 (deftest test-evaluar-cond
   (is (= '(nil (equal equal setq setq)) (evaluar-cond nil '(equal equal setq setq) nil)))
-  (is (= '(nil (equal equal first first)) (evaluar-cond '(((equal 1 2) (setq x 1))) '(equal equal first first) nil)))
-  (is (= '(nil (equal equal first first)) (evaluar-cond '(((equal 'a 'b) (setq x 1))) '(equal equal first first) nil)))
-  (is (= '(2 (y 2 equal equal setq setq)) (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2))) '(equal equal setq setq) nil)))
-  (is (= '(3 (z 3 y 2 equal equal setq setq)) (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2) (setq z 3))) '(equal equal setq setq) nil)))
+  (is (= '(nil (equal equal first first)) (evaluar-cond '((((equal 1 2) (setq x 1)))) '(equal equal first first) nil)))
+  (is (= '(nil (equal equal first first)) (evaluar-cond '((((equal 'a 'b) (setq x 1)))) '(equal equal first first) nil)))
+  (is (= '(2 (y 2 equal equal setq setq)) (evaluar-cond '((((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2)))) '(equal equal setq setq) nil)))
+  (is (= '(3 (z 3 y 2 equal equal setq setq)) (evaluar-cond '((((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2) (setq z 3)))) '(equal equal setq setq) nil)))
   )
 
 
@@ -271,7 +271,12 @@
 (deftest test-terpri
   (is (= '(nil (terpri terpri nil nil)) (evaluar '(terpri) '(terpri terpri nil nil) nil)))
   (is (= '((*error* stream expected 1) (terpri terpri nil nil)) (evaluar '(terpri 1) '(terpri terpri nil nil) nil)))
+  )
 
+(deftest test-or
+  ; (is (= '(nil (or or t t equal equal nil nil)) (evaluar '(or (equal 1 2) (equal 3 4) (equal 5 6)) '(or or t t equal equal nil nil) nil)))
+  ; (or) -> nil
+  ; (or nil '() 2 3) -> 2
   )
 
 
@@ -282,9 +287,19 @@
 ;  )
 
 
-
-
-
-
-
+;(evaluar-cond '(((equal 1 2) (setq x 1))) '(equal equal first first) nil)
+;
+;
+;(cond (((equal 'a 1) (prin3 1) (setq a 1) 'a) ((equal 2 2) (prin3 2) (setq b 1) 'b)))
+;
+;(cond (((equal 1 2) (setq x 1))))
+;((((equal 1 2) (setq x 1))))
+;(((equal 1 2) (setq x 1)))
+;
+;
+;(or (equal 1 2) (equal 3 4) (equal 5 6))
+;
+;
+;
+;
 (run-tests)
