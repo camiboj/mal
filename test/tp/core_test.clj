@@ -81,10 +81,9 @@
   )
 
 (deftest test-revisar-lea
-  (is (= nil (revisar-lae '(1 add first)))))
-(is (= '(*error* too-many-args) '(1 add '(*error* too-many-args)))
-    )
-
+  (is (= nil (revisar-lae '(1 add first))))
+  ; (is (= '(*error* too-many-args) (revisar-lae '(1 add '(*error* too-many-args) first))))
+  )
 
 (deftest test-buscar
   (is (= 'sub (buscar '- '(+ add - sub))))
@@ -92,14 +91,14 @@
   )
 
 
+(deftest test-evaluar-secuencia-en-cond
+  (is (= '(2 (y 2 setq setq)) (evaluar-secuencia-en-cond '((setq y 2)) '(setq setq) nil)))
+  (is (= '(3 (z 3 y 2 setq setq)) (evaluar-secuencia-en-cond '((setq y 2) (setq z 3)) '(setq setq) nil)))
+  )
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; TODO
-; (defn test-evaluar-secuenci-cond
-;   (is (= (2 '(setq setq y 2)) (evaluar-secuencia-en-cond '((setq y 2)) '(setq setq) nil)))
-;   (is (= (3 '(setq setq y 2 z 3)) (evaluar-secuencia-en-cond '((setq y 2) (setq z 3)) '(setq setq) nil)))
-;   )
-
-
-
 ; (deftest test-load
 ;   (is (= (load-file "tlc-lisp.clj")))
 ;  )

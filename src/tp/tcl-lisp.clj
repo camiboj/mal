@@ -236,17 +236,20 @@
 ; Devuelve el indice de la clave
 ; Si la clave no existe retorna un numero negativo
 (defn index_clave [ambiente clave]
-
-  (let [indice (.indexOf (obtener_claves ambiente) clave)]\
+  (let [indice (.indexOf (obtener_claves ambiente) clave)]
     (* indice 2)
     )
   )
 
-(defn agregar_varieble [ambiente clave valor]
+(defn pisar_variable [ambiente indice valor]
+  (apply list(assoc (vec ambiente) (inc indice) valor))
+  )
+
+(defn asociar_varieble [ambiente clave valor]
   (let [indice (index_clave ambiente clave)]
     (if (< indice 0)
       (do (conj (conj ambiente valor) clave))
-      (do (assoc ambiente (inc indice) valor))
+      (do (pisar_variable ambiente indice valor))
       )
     )
   )
@@ -258,7 +261,7 @@
 (defn actualizar-amb [amb-global clave valor]
   (if (primer_elemento_error? amb-global)
     (do amb-global)
-    (do (agregar_varieble amb-global clave valor))
+    (do (asociar_varieble amb-global clave valor))
     )
   )
 
@@ -561,16 +564,13 @@
 
 ;;;;;;;;;;;;;;;;;;;; ARREGLAR ;;;;;;;;;;;;;;;;;;;;
 
-(defn _evaluar [amb-global amb-local expre]
-  (let [evaluadito (first (evaluar expre amb-global amb-local))]
-    evaluadito
-    ))
-
-
 ; Evalua (con evaluar) secuencialmente las sublistas de una lista y retorna el valor de la ultima evaluacion.
 (defn evaluar-secuencia-en-cond [lis amb-global amb-local]
-  (let [cached_evaluar (partial _evaluar amb-global amb-local)]
-    (last (map cached_evaluar lis))
+  (if (= (count lis) 1)
+    (evaluar (first lis) amb-global amb-local)
+    (let [retorno (evaluar (first lis) amb-global amb-local), ambientes (rest retorno)]
+      (evaluar-secuencia-en-cond (rest lis) (first ambientes) (second ambientes))
+      )
     )
   )
 
@@ -608,7 +608,7 @@
 
 
 (defn my_or [lae amb-local amb-global]
-  (let [evaluated (map (partial _evaluar amb-global amb-local) lae)]
+  (let [evaluated (map (partial evaluar amb-global amb-local) lae)]
     (not-every? nil? evaluated)
     )
   )
