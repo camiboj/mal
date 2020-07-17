@@ -113,6 +113,19 @@
   (is (= '((list '*error* 'not-implemented) (append append nil nil) nil)) (evaluar '(append '(1) "a") '(append append nil nil) nil))
   )
 
+(deftest test-cons
+  (is (= '((0 1 2 3) (cons cons nil nil) nil)) (evaluar '(cons 0 '(1 2 3)) '(cons cons nil nil) nil))
+  (is (= '(((1 2) 3) (cons cons nil nil) nil)) (evaluar '(cons '(1 2) '(3)) '(cons cons nil nil) nil))
+  (is (= '((1) (cons cons nil nil) nil)) (evaluar '(cons 1 '()) '(cons cons nil nil) nil))
+  (is (= '((1) (cons cons nil nil) nil)) (evaluar '(cons 1 nil) '(cons cons nil nil) nil))
+  (is (= '((nil) (cons cons nil nil) nil)) (evaluar '(cons nil nil) '(cons cons nil nil) nil))
+  (is (= '((nil) (cons cons nil nil) nil)) (evaluar '(cons '() '()) '(cons cons nil nil) nil))
+  (is (= '((list '*error* 'too-few-args) (cons cons nil nil) nil)) (evaluar '(cons '(1 2)) '(cons cons nil nil) nil))
+  (is (= '((list '*error* 'too-many-args) (cons cons nil nil) nil)) (evaluar '(cons '(1 2) '(3) '(4)) '(cons cons nil nil) nil))
+  (is (= '((*error* not-implemented) (cons cons nil nil) nil)) (evaluar '(cons '(1 2 3) 4) '(cons cons nil nil) nil))
+  (is (= '((*error* not-implemented) (cons cons nil nil) nil)) (evaluar '(cons '(1 2 3) "a") '(cons cons nil nil) nil))
+  )
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; TODO
