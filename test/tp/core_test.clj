@@ -279,8 +279,7 @@
   (is (= '(t (or or t t equal equal nil nil)) (evaluar '(or (equal 1 2) (equal 3 4) (equal 5 5)) '(or or t t equal equal nil nil) nil)))
   (is (= '(3 (or or t t equal equal nil nil)) (evaluar '(or (equal 1 2) (equal 3 4) (equal 5 6) 3) '(or or t t equal equal nil nil) nil)))
   (is (= '(t (or or t t equal equal nil nil)) (evaluar '(or (equal 1 2) (equal 3 4) (equal 5 5) 3) '(or or t t equal equal nil nil) nil)))
-  ; (or) -> nil
-  ; (or nil '() 2 3) -> 2
+  (is (= '(1 (or or t t equal equal nil nil)) (evaluar '(or '() 1 2 3) '(or or t t equal equal nil nil) nil)))
   )
 
 
@@ -291,19 +290,4 @@
 ;  )
 
 
-;(evaluar-cond '(((equal 1 2) (setq x 1))) '(equal equal first first) nil)
-;
-;
-;(or (((equal 'a 1) (prin3 1) (setq a 1) 'a) ((equal 2 2) (prin3 2) (setq b 1) 'b)))
-;
-;(cond (((equal 1 2) (setq x 1))))
-;((((equal 1 2) (setq x 1))))
-;(((equal 1 2) (setq x 1)))
-;
-;
-;(or (equal 1 2) (equal 3 4) (equal 5 6))
-;
-;
-;
-;
 (run-tests)

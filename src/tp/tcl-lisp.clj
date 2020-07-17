@@ -110,13 +110,13 @@
           (igual? (first expre) 'cond) (evaluar-cond (next expre) amb-global amb-local)
           true (aplicar (first (evaluar (first expre) amb-global amb-local)) (map (fn [x] (first (evaluar x amb-global amb-local))) (next expre)) amb-global amb-local))))
 
-; -> TODO (REPAIR) - cond: macro (evalúa múltiples condiciones)
+; -> OK - cond: macro (evalúa múltiples condiciones)
 ; -> OK -  de: macro (define función y la liga
 ; -> OK -  exit: sale del intérprete
 ; -> OK -  if: forma especial (evalúa una condición)
 ; -> OK -  lambda: macro (define una func.
 ; -> TODO -  load: carga un archivo
-; -> TODO -  or: macro (evalúa mientras no obtenga
+; -> OK -  or: macro (evalúa mientras no obtenga
 ; -> OK -  quote: forma especial (impide evalua
 ; -> OK -  setq: forma especial (liga símbolo a valor)
 
