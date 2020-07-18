@@ -1,4 +1,4 @@
-(load 'breadth)
+(load '../../test/breadth)
 (setq bc '(
     (lambda (x) (if (lt (jarra5 x) 5) (list 5 (jarra8 x)) x))
     (lambda (x) (if (gt (jarra5 x) 0) (list 0 (jarra8 x)) x))

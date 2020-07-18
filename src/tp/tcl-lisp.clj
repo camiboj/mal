@@ -26,6 +26,8 @@
 (declare my_prin3)
 (declare my_rest)
 (declare my_or)
+(declare my_load)
+(declare my_read)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -84,6 +86,8 @@
 ; Si el primer elemento de la expresion es una forma especial o una macro, valida los demas elementos y retorna el resultado y el (nuevo?) ambiente.
 ; Si no lo es, se trata de una funcion en posicion de operador (es una aplicacion de calculo lambda), por lo que se llama a la funcion aplicar,
 ; pasandole 4 argumentos: la evaluacion del primer elemento, una lista con las evaluaciones de los demas, el ambiente global y el ambiente local.
+
+
 (defn evaluar [expre amb-global amb-local]
   (if (not (seq? expre))
     (if (or (number? expre) (string? expre)) (list expre amb-global) (list (buscar expre (concat amb-local amb-global)) amb-global))
@@ -108,7 +112,7 @@
                                                true (list expre amb-global))
           (igual? (first expre) 'or) (my_or (next expre) amb-global amb-local)
           (igual? (first expre) 'cond) (evaluar-cond (next expre) amb-global amb-local)
-          (igual? (first expre) 'load) (cargar-arch (next expre) amb-global amb-local (second expre))
+          (igual? (first expre) 'load) (my_load (next expre) amb-global amb-local)
 
           true (aplicar (first (evaluar (first expre) amb-global amb-local)) (map (fn [x] (first (evaluar x amb-global amb-local))) (next expre)) amb-global amb-local))))
 
@@ -173,6 +177,7 @@
                          (igual? f 'terpri) (my_terpri lae)
                          (igual? f 'prin3) (my_prin3 lae)
                          (igual? f 'rest) (my_rest lae)
+                         (igual? f 'read) (my_read lae)
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)
@@ -235,10 +240,18 @@
   (map obtener_valor (filter pos_par? (map-indexed list ambiente)))
   )
 
+(defn _index-of [coll e] (first (keep-indexed #(if (igual? e %2) %1) coll)))
+
+(defn index-of [coll e]
+  (let [index (_index-of coll e)]
+    (if index index -1)
+    )
+  )
+
 ; Devuelve el indice de la clave
 ; Si la clave no existe retorna un numero negativo
 (defn index_clave [ambiente clave]
-  (let [indice (.indexOf (obtener_claves ambiente) clave)]
+  (let [indice (index-of (obtener_claves ambiente) clave)]
     (* indice 2)
     )
   )
@@ -619,8 +632,36 @@
     (_my_or lis amb-global amb-local)
     )
   )
+
+(defn my_load [lae amb-global amb-local]
+  (let [ari (controlar-aridad lae 1), param (first lae)]
+    (if (seq? ari)
+      ari
+      (list 't (cargar-arch amb-global amb-local param))
+      )
+    )
+  )
+
+(defn aux_my_load [lae amb-global amb-local]
+  (let [ret (my_load lae amb-global amb-local) ]
+    (list 't ret)
+    )
+  )
+
+
+(defn my_read [lae]
+  (let [ari (controlar-aridad lae 0)]
+    (if (seq? ari)
+      ari
+      (read)
+      )
+    )
+  )
+
 (repl)
 
+; (load '../../test/test_basico)
+; (load '../../test/jarras)
 ; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
 
 ; Falta implementar las 9 funciones auxiliares (actualizar-amb, controlar-aridad, imprimir, buscar, etc.)
