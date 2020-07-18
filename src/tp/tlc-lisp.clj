@@ -86,8 +86,6 @@
 ; Si el primer elemento de la expresion es una forma especial o una macro, valida los demas elementos y retorna el resultado y el (nuevo?) ambiente.
 ; Si no lo es, se trata de una funcion en posicion de operador (es una aplicacion de calculo lambda), por lo que se llama a la funcion aplicar,
 ; pasandole 4 argumentos: la evaluacion del primer elemento, una lista con las evaluaciones de los demas, el ambiente global y el ambiente local.
-
-
 (defn evaluar [expre amb-global amb-local]
   (if (not (seq? expre))
     (if (or (number? expre) (string? expre)) (list expre amb-global) (list (buscar expre (concat amb-local amb-global)) amb-global))
@@ -115,16 +113,6 @@
           (igual? (first expre) 'load) (my_load (next expre) amb-global amb-local)
 
           true (aplicar (first (evaluar (first expre) amb-global amb-local)) (map (fn [x] (first (evaluar x amb-global amb-local))) (next expre)) amb-global amb-local))))
-
-; -> OK - cond: macro (evalúa múltiples condiciones)
-; -> OK -  de: macro (define función y la liga
-; -> OK -  exit: sale del intérprete
-; -> OK -  if: forma especial (evalúa una condición)
-; -> OK -  lambda: macro (define una func.
-; -> TODO -  load: carga un archivo
-; -> OK -  or: macro (evalúa mientras no obtenga
-; -> OK -  quote: forma especial (impide evalua
-; -> OK -  setq: forma especial (liga símbolo a valor)
 
 
 
@@ -189,29 +177,6 @@
                               (evaluar (first (nnext f)) amb-global (concat (reduce concat (map list (fnext f) lae)) amb-local))
                               (aplicar (cons 'lambda (cons (fnext f) (next (nnext f)))) lae (fnext (evaluar (first (nnext f)) amb-global (concat (reduce concat (map list (fnext f) lae)) amb-local))) amb-local))))))
   )
-
-; -> OK - add: retorna la suma de los argumentos
-; -> OK - append: retorna la fusión
-; -> OK - cons: retorna inserción de
-; -> OK - env: retorna el ambiente
-; -> OK - equal: retorna t si dos elementos
-; -> OK - eval: retorna la evaluación de
-; -> OK - first: retorna la 1ra. posición de una lista
-; -> OK - ge: retorna t si el 1° núm. es mayor o igual que el 2°
-; -> OK - gt: retorna t si el 1° núm. es mayor que el 2°
-; -> OK - length: retorna la longitud de una lista
-; -> OK - list: retorna una lista formada por los args.
-; -> OK - lt: retorna t si el 1° núm. es menor que el 2°
-; -> OK - not: retorna la negación de un valor
-; -> OK - null: retorna t si un elemento es nil
-; -> OK - prin3: imprime un elemento
-; -> TODO - read: retorna la lectura de un elemento
-; -> OK - rest: retorna una lista sin su 1ra. posición
-; -> OK - reverse: retorna una lista
-; -> OK - sub: retorna la resta de los argumentos
-; -> OK - terpri: imprime un salto de línea
-; -> OK - +: equivale a add
-; -> OK - -: equivale a sub
 
 
 ; Retorna True si el valor no es escalar y
