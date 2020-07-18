@@ -658,12 +658,5 @@
     )
   )
 
-(repl)
 
-; (load '../../test/test_basico)
-; (load '../../test/jarras)
-; Falta terminar de implementar las 2 funciones anteriores (aplicar y evaluar)
-
-; Falta implementar las 9 funciones auxiliares (actualizar-amb, controlar-aridad, imprimir, buscar, etc.)
-
-; Falta hacer que la carga del interprete en Clojure (tlc-lisp.clj) retorne true
+true

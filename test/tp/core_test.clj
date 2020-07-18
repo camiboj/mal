@@ -284,10 +284,10 @@
 
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;; TODO
-; (deftest test-load
-;   (is (= (load-file "tlc-lisp.clj")))
-;  )
+
+(deftest test-load
+  (is (= (load-file "../../src/tp/tlc-lisp.clj")))
+ )
 
 
-(run-tests)
+true
