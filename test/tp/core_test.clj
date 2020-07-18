@@ -1,6 +1,6 @@
 (require '[clojure.test :refer [is deftest run-tests]])
 
-(load-file "../../src/tp/tcl-lisp.clj")
+(load-file "../../src/tp/tlc-lisp.clj")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; UNIT TEST ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (deftest test-aplicar
@@ -290,4 +290,4 @@
  )
 
 
-true
+(run-tests)
