@@ -602,10 +602,6 @@
   )
 
 ; Evalua el cuerpo de una macro COND. Siempre retorna una lista con un resultado y un ambiente.
-; Recibe una lista de sublistas (cada una de las cuales tiene una condicion en su 1ra. posicion) y los ambientes global y local
-; Si la lista es nil, el resultado es nil y el ambiente retornado es el global.
-; Si no, evalua (con evaluar) la cabeza de la 1ra. sublista y, si el resultado no es nil, retorna el res. de invocar a evaluar-secuencia-en-condicion con la cola de esa sublista.
-; En caso contrario, sigue con las demas sublistas.
 (defn evaluar-cond [lis amb-global amb-local]
   (if (nil? lis)
     (list nil amb-global)
