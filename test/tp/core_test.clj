@@ -283,7 +283,14 @@
   )
 
 
-
+(deftest test-if
+  (is (= '(verdadero (if if t t equal equal nil nil)) (evaluar '(if (equal 1 1) 'verdadero 'falso) '(if if t t equal equal nil nil) nil)))
+  (is (= '(verdadero (if if t t equal equal nil nil)) (evaluar '(if (equal 1 1) 'verdadero) '(if if t t equal equal nil nil) nil)))
+  (is (= '(falso (if if t t equal equal nil nil)) (evaluar '(if (equal 1 2) 'verdadero 'falso) '(if if t t equal equal nil nil) nil)))
+  (is (= '(nil (if if t t equal equal nil nil)) (evaluar '(if (equal 1 2) 'verdadero) '(if if t t equal equal nil nil) nil)))
+  (is (= '(5 (if if t t equal equal nil nil + add)) (evaluar '(if (equal 'a 'A) (+ 3 2) (equal 2 2)) '(if if t t equal equal nil nil + add) nil)))
+  (is (= '(t (if if t t equal equal nil nil + add)) (evaluar '(if (equal 'a 'b) (+ 3 2) (equal 2 2)) '(if if t t equal equal nil nil + add) nil)))
+  )
 
 (deftest test-load
   (is (= (load-file "../../src/tp/tlc-lisp.clj")))

@@ -28,6 +28,7 @@
 (declare my_or)
 (declare my_load)
 (declare my_read)
+(declare my_if)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -111,6 +112,7 @@
           (igual? (first expre) 'or) (my_or (next expre) amb-global amb-local)
           (igual? (first expre) 'cond) (evaluar-cond (next expre) amb-global amb-local)
           (igual? (first expre) 'load) (my_load (next expre) amb-global amb-local)
+          (igual? (first expre) 'if) (my_if (next expre) amb-global amb-local)
 
           true (aplicar (first (evaluar (first expre) amb-global amb-local)) (map (fn [x] (first (evaluar x amb-global amb-local))) (next expre)) amb-global amb-local))))
 
@@ -618,6 +620,29 @@
       )
     )
   )
+
+(defn _my_if [condicion si_verdadero si_falso amb-global amb-local]
+  (let [condicion_evaluada (evaluar condicion amb-global amb-local)]
+    (if (first condicion_evaluada)
+      (evaluar si_verdadero amb-global amb-local)
+      (evaluar si_falso amb-global amb-local)
+      )
+    )
+  )
+
+
+
+(defn my_if [lae amb-global amb-local]
+  (let [len (count lae)]
+    (cond
+      (< len 2) (list '*error* 'too-few-args)
+      (= len 2) (_my_if (nth lae 0) (nth lae 1) nil amb-global amb-local)
+      (> len 3) (list '*error* 'too-many-args)
+      (= len 3) (_my_if (nth lae 0) (nth lae 1) (nth lae 2) amb-global amb-local)
+      )
+    )
+  )
+
 
 
 true
