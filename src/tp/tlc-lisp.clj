@@ -517,7 +517,6 @@
 
 (defn my_null [lae]
   (let [ari (controlar-aridad lae 1), param (nil_a_lista (first lae))]
-    (println (first lae))
     (cond
       (seq? ari) ari
       true (convert_from_bool (nil? (lista_vacia_a_nil param)))
@@ -546,15 +545,13 @@
   (let [ari (controlar-aridad lae 1), param (first lae)]
     (cond (seq? ari) ari
           (nil? param) nil
-          (not (list? param)) (list '*error* 'list-expected param)
+          (not (seq? param)) (list '*error* 'list-expected param)
           true (rest param)
           )
     )
   )
 
 
-
-;;;;;;;;;;;;;;;;;;;; ARREGLAR ;;;;;;;;;;;;;;;;;;;;
 
 ; Evalua (con evaluar) secuencialmente las sublistas de una lista y retorna el valor de la ultima evaluacion.
 (defn evaluar-secuencia-en-cond [lis amb-global amb-local]
@@ -653,7 +650,6 @@
       )
     )
   )
-
 
 
 true
