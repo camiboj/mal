@@ -608,7 +608,7 @@
   (let [ari (controlar-aridad lae 1), param (first lae)]
     (if (seq? ari)
       ari
-      (list 't (cargar-arch amb-global amb-local param))
+      (list nil (cargar-arch amb-global amb-local param))
       )
     )
   )
