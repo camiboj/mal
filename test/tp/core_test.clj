@@ -197,6 +197,7 @@
 
 (deftest test-list
  (is (= '((nil) (list list nil nil))  (evaluar '(list '()) '(list list nil nil) nil)))
+ (is (= '(() (list list nil nil))  (evaluar '(list) '(list list nil nil) nil)))
  (is (= '((1 2 3) (list list nil nil))  (evaluar '(list 1 2 3) '(list list nil nil) nil)))
  (is (= '((nil) (list list nil nil))  (evaluar '(list nil) '(list list nil nil) nil)))
  (is (= '((1 "a" 2 "b") (list list nil nil))  (evaluar '(list 1 "a" 2 "b") '(list list nil nil) nil)))
@@ -228,7 +229,9 @@
 (deftest test-null
  (is (= '(nil (null null nil nil t t equal equal))  (evaluar '(null t) '(null null nil nil t t equal equal) nil)))
  (is (= '(t (null null nil nil t t equal equal))  (evaluar '(null nil) '(null null nil nil t t equal equal) nil)))
- (is (= '(nil (null null nil nil t t equal equal))  (evaluar '(null (equal 1 1)) '(null null nil nil t t equal equal) nil)))
+ (is (= '(t (null null nil nil t t equal equal))  (evaluar '(null ()) '(null null nil nil t t equal equal) nil)))
+ (is (= '(t (null null nil nil t t equal equal list list))  (evaluar '(null (list)) '(null null nil nil t t equal equal list list) nil)))
+ (is (= '(nil (null null nil nil t t equal equal list list))  (evaluar '(null (equal 1 1)) '(null null nil nil t t equal equal list list) nil)))
  (is (= '(t (null null nil nil t t equal equal))  (evaluar '(null (equal 1 2)) '(null null nil nil t t equal equal) nil)))
  (is (= '(nil (null null nil nil t t equal equal))  (evaluar '(null 1) '(null null nil nil t t equal equal) nil)))
  (is (= '(nil (null null nil nil t t equal equal))  (evaluar '(null '(1 2)) '(null null nil nil t t equal equal) nil)))
@@ -236,6 +239,12 @@
  (is (= '((*error* too-few-args) (null null nil nil t t equal equal))  (evaluar '(null) '(null null nil nil t t equal equal) nil)))
  )
 
+(deftest test-aux
+  (is (= nil  (lista_vacia_a_nil '())))
+  (is (= nil  (lista_vacia_a_nil (list))))
+  (is (= '(1 2 3)  (lista_vacia_a_nil (list 1 2 3))))
+  (is (= '(1 2 3)  (lista_vacia_a_nil '(1 2 3))))
+)
 
 (deftest test-prin3
  ; ouput 1
@@ -296,5 +305,41 @@
   (is (= (load-file "../../src/tp/tlc-lisp.clj")))
  )
 
-
 (run-tests)
+;(C (list first rest list) '((1 2 3)(4 5 6)(7 8 9)))
+;
+;
+;
+;(if (null (list first rest list)) 1 2)
+;(if (null (list rest list)) 1 2)
+;(if (null (list list)) 1 2)
+;(if (null (list)) 1 2)
+;
+;
+;((first (list first rest list)) '((1 2 3)(4 5 6)(7 8 9)))
+;((first (list rest list)) '((1 2 3)(4 5 6)(7 8 9)))
+;((first (list list)) '((1 2 3)(4 5 6)(7 8 9)))
+;
+;()
+;
+;
+;
+;(cons ((first (list first rest list)) '((1 2 3)(4 5 6)(7 8 9))))
+;
+;
+;
+;(cons ((first '(first rest list)) X) (C (rest LF) X))
+;
+;
+;(de C (LF X)
+;    (if (null LF)
+;      nil
+;      (cons ((first LF) X) (C (rest LF) X))
+;      )
+;    )
+;
+;
+;(if (null '(first rest list))
+;  nil
+;  (cons ((first '(first rest list)) '((1 2 3)(4 5 6)(7 8 9))) (C (rest '(first rest list)) '((1 2 3)(4 5 6)(7 8 9))))
+;  )

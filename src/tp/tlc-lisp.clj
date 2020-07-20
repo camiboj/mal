@@ -497,21 +497,32 @@
   )
 
 
-(defn evaluar_bool [lae f]
+
+(defn my_not [lae]
   (let [ari (controlar-aridad lae 1), param (first lae)]
     (cond
       (seq? ari) ari
-      true (convert_from_bool (f param))
+      true (convert_from_bool (not param))
       )
     )
   )
 
-(defn my_not [lae]
-  (evaluar_bool lae not)
+(defn lista_vacia_a_nil [lista]
+  (if (and (seq? lista) (empty? lista))
+    nil
+    lista
+    )
   )
 
+
 (defn my_null [lae]
-  (evaluar_bool lae nil?)
+  (let [ari (controlar-aridad lae 1), param (nil_a_lista (first lae))]
+    (println (first lae))
+    (cond
+      (seq? ari) ari
+      true (convert_from_bool (nil? (lista_vacia_a_nil param)))
+      )
+    )
   )
 
 (defn my_terpri [lae]
