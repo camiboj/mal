@@ -5,6 +5,7 @@
     (t (buscar bc final (list (list inicial)) nil))))
 
 (de buscar (bc fin grafobusq estexp)
+    (prin3 "Buscando")
     (cond ((null grafobusq) (fracaso))
         ((pertenece fin (first grafobusq)) (exito grafobusq))
         (t (buscar bc fin (append (rest grafobusq) (expandir (first grafobusq) bc estexp))

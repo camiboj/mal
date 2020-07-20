@@ -580,7 +580,7 @@
 (defn evaluar-cond [lis amb-global amb-local]
   (if (nil? lis)
     (list nil amb-global)
-    (_evaluar-cond (first lis) amb-global amb-local)
+    (_evaluar-cond lis amb-global amb-local)
     )
   )
 
@@ -610,12 +610,6 @@
       ari
       (list 't (cargar-arch amb-global amb-local param))
       )
-    )
-  )
-
-(defn aux_my_load [lae amb-global amb-local]
-  (let [ret (my_load lae amb-global amb-local) ]
-    (list 't ret)
     )
   )
 
@@ -650,6 +644,5 @@
       )
     )
   )
-
 
 true

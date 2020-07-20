@@ -104,13 +104,15 @@
 
 (deftest test-evaluar-cond
   (is (= '(nil (equal equal setq setq)) (evaluar-cond nil '(equal equal setq setq) nil)))
-  (is (= '(nil (equal equal first first)) (evaluar-cond '((((equal 1 2) (setq x 1)))) '(equal equal first first) nil)))
-  (is (= '(nil (equal equal first first)) (evaluar-cond '((((equal 'a 'b) (setq x 1)))) '(equal equal first first) nil)))
-  (is (= '(2 (y 2 equal equal setq setq)) (evaluar-cond '((((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2)))) '(equal equal setq setq) nil)))
-  (is (= '(3 (z 3 y 2 equal equal setq setq)) (evaluar-cond '((((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2) (setq z 3)))) '(equal equal setq setq) nil)))
+  (is (= '(nil (equal equal first first)) (evaluar-cond '(((equal 1 2) (setq x 1))) '(equal equal first first) nil)))
+  (is (= '(nil (equal equal first first)) (evaluar-cond '(((equal 'a 'b) (setq x 1))) '(equal equal first first) nil)))
+  (is (= '(2 (y 2 equal equal setq setq)) (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2))) '(equal equal setq setq) nil)))
+  (is (= '(3 (z 3 y 2 equal equal setq setq)) (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2) (setq z 3))) '(equal equal setq setq) nil)))
+  (is (= '(3 (y 2 equal equal setq setq)) (evaluar-cond '(((equal 2 1) (setq x 1)) (t (setq y 2) 3)) '(equal equal setq setq) nil)))
+  (is (= '((1) (append append nil nil))  (evaluar '(append '(1) nil) '(append append nil nil) nil)))
   )
 
-
+; (cond ((equal 2 1) (setq x 1)) (t (setq y 2) 3))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; INTERPRETE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
