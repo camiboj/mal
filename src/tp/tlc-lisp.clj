@@ -558,7 +558,7 @@
   (if (= (count lis) 1)
     (evaluar (first lis) amb-global amb-local)
     (let [retorno (evaluar (first lis) amb-global amb-local), ambientes (rest retorno)]
-      (evaluar-secuencia-en-cond (rest lis) (first ambientes) (second ambientes))
+      (evaluar-secuencia-en-cond (rest lis) (first ambientes) amb-local)
       )
     )
   )
