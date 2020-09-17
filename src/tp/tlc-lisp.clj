@@ -29,6 +29,7 @@
 (declare my_load)
 (declare my_read)
 (declare my_if)
+(declare my_mul)
 
 ; REPL (read–eval–print loop).
 ; Aridad 0: Muestra mensaje de bienvenida y se llama recursivamente con el ambiente inicial.
@@ -42,7 +43,7 @@
    (println "Inspirado en:")
    (println "TLC-LISP Version 1.51 for the IBM Personal Computer")
    (println "Copyright (c) 1982, 1983, 1984, 1985 The Lisp Company") (flush)
-   (repl '(add add append append cond cond cons cons de de env env equal equal eval eval exit exit
+   (repl '(mul mul add add append append cond cond cons cons de de env env equal equal eval eval exit exit
                first first ge ge gt gt if if lambda lambda length length list list load load lt lt nil nil not not
                null null or or prin3 prin3 quote quote read read rest rest reverse reverse setq setq sub sub
                t t terpri terpri + add - sub)))
@@ -168,6 +169,7 @@
                          (igual? f 'prin3) (my_prin3 lae)
                          (igual? f 'rest) (my_rest lae)
                          (igual? f 'read) (my_read lae)
+                         (igual? f 'mul) (my_mul lae)
                          true (let [lamb (buscar f (concat amb-local amb-global))]
                                 (cond (or (number? lamb) (igual? lamb 't) (igual? lamb nil)) (list '*error* 'non-applicable-type lamb)
                                       (or (number? f) (igual? f 't) (igual? f nil)) (list '*error* 'non-applicable-type f)
@@ -535,7 +537,7 @@
     (cond
       (> (count lae) 1) (list '*error* 'stream 'expected (second lae))
       (seq? ari) ari
-      true (do (println param) param)
+      true (do (print param) (flush) param)
       )
     )
   )
@@ -643,6 +645,11 @@
       (= len 3) (_my_if (nth lae 0) (nth lae 1) (nth lae 2) amb-global amb-local)
       )
     )
+  )
+
+(defn my_mul [lae]
+  (try (reduce * lae)
+       (catch Exception e (list '*error* 'number 'expected)))
   )
 
 true
