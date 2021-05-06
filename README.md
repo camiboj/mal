@@ -1,4 +1,4 @@
-# MAL
+# Make A Lisp
 
 A Clojure library designed to *make a lisp*
 
